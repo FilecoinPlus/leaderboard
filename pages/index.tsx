@@ -34,6 +34,11 @@ import {
   TextArea,
   TextField,
   ToggleButton,
+  Grid,
+  View,
+  Header,
+  Footer,
+  Content,
 } from '@adobe/react-spectrum';
 import Edit from '@spectrum-icons/workflow/Edit';
 import { ActionMenu, Item, Menu, MenuTrigger } from '@react-spectrum/menu';
@@ -60,37 +65,67 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Fil+ Leaderboard</h1>
-        <Divider />
+      <Grid
+        areas={['header header', 'content content', 'footer footer']}
+        columns={['1fr', '3fr']}
+        rows={['size-1000', 'auto', 'size-1000']}
+        height="size-6000"
+        gap="size-100"
+      >
+        <View
+          borderWidth="thin"
+          borderColor="dark"
+          borderRadius="medium"
+          padding="size-50"
+          gridArea="header"
+        >
+          <Header>
+            <Heading>Fil+ Leaderboard</Heading>
+            <Divider />
+          </Header>
+        </View>
 
-        <Flex direction="column" gap="size-125">
-          <TableView
-            aria-label="List of notaries"
-            maxWidth="size-6000"
-          >
-            <TableHeader columns={columns}>
-              {(column) => (
-                <Column
-                  key={column.uid}
-                >
-                  {column.name}
-                </Column>
-              )}
-            </TableHeader>
-            <TableBody items={rows}>
-              {(item) => (
-                <Row>
-                  {(columnKey) => <Cell>{item[columnKey]}</Cell>}
-                </Row>
-              )}
-            </TableBody>
-          </TableView>
-        </Flex>
+        <View
+          borderWidth="thin"
+          borderColor="dark"
+          borderRadius="medium"
+          padding="size-50"
+          gridArea="content"
+        >
+          <Content>
+            <Flex direction="column" gap="size-125">
+              <TableView aria-label="List of notaries" maxWidth="size-6000">
+                <TableHeader columns={columns}>
+                  {(column) => <Column key={column.uid}>{column.name}</Column>}
+                </TableHeader>
+                <TableBody items={rows}>
+                  {(item) => (
+                    <Row>{(columnKey) => <Cell>{item[columnKey]}</Cell>}</Row>
+                  )}
+                </TableBody>
+              </TableView>
+            </Flex>
+          </Content>
+        </View>
 
-      </main>
-
-      <footer>© Filecoin Foundation</footer>
+        <View
+          borderWidth="thin"
+          borderColor="dark"
+          borderRadius="medium"
+          padding="size-50"
+          gridArea="footer"
+        >
+          <Footer>
+            {/* <Flex direction="row"> */}
+            <Text>&copy; Filecoin Foundation</Text>
+            {/* <Text>
+              Content on this site is licensed under a Creative Commons
+              Attribution 4.0 International license.
+            </Text> */}
+            {/* </Flex> */}
+          </Footer>
+        </View>
+      </Grid>
     </div>
   );
 }
