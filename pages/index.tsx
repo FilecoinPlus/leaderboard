@@ -40,15 +40,15 @@ import { ActionMenu, Item, Menu, MenuTrigger } from '@react-spectrum/menu';
 
 let columns = [
   { name: 'Name', uid: 'name' },
-  { name: 'Type', uid: 'type' },
-  { name: 'Date Modified', uid: 'date' },
+  { name: 'Role', uid: 'role' },
+  // { name: 'Date Modified', uid: 'date' },
 ];
 
 let rows = [
-  { id: 1, name: 'Games', date: '6/7/2020', type: 'File folder' },
-  { id: 2, name: 'Program Files', date: '4/7/2021', type: 'File folder' },
-  { id: 3, name: 'bootmgr', date: '11/20/2010', type: 'System file' },
-  { id: 4, name: 'log.txt', date: '1/18/2016', type: 'Text Document' },
+  { id: 1, name: 'Notary 1', role: 'Notary' },
+  { id: 2, name: 'Notary 2', role: 'Notary' },
+  { id: 3, name: 'Notary 3', role: 'Notary' },
+  { id: 4, name: 'Notary 4', role: 'Notary' },
 ];
 
 export default function Home() {
@@ -62,17 +62,17 @@ export default function Home() {
 
       <main>
         <h1>Fil+ Leaderboard</h1>
+        <Divider />
 
         <Flex direction="column" gap="size-125">
           <TableView
-            aria-label="Example table with dynamic content"
+            aria-label="List of notaries"
             maxWidth="size-6000"
           >
             <TableHeader columns={columns}>
               {(column) => (
                 <Column
                   key={column.uid}
-                  align={column.uid === 'date' ? 'end' : 'start'}
                 >
                   {column.name}
                 </Column>
@@ -80,45 +80,14 @@ export default function Home() {
             </TableHeader>
             <TableBody items={rows}>
               {(item) => (
-                <Row>{(columnKey) => <Cell>{item[columnKey]}</Cell>}</Row>
+                <Row>
+                  {(columnKey) => <Cell>{item[columnKey]}</Cell>}
+                </Row>
               )}
             </TableBody>
           </TableView>
         </Flex>
 
-        <Heading level={2}>Navigation</Heading>
-        <Divider />
-
-        <Breadcrumbs>
-          <Item key="home">Home</Item>
-          <Item key="trendy">Trendy</Item>
-          <Item key="march 2020 assets">March 2020 Assets</Item>
-        </Breadcrumbs>
-
-        <Link>
-          <a
-            href="https://www.imdb.com/title/tt6348138/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            The missing link.
-          </a>
-        </Link>
-
-        <Tabs aria-label="History of Ancient Rome">
-          <TabList>
-            <Item key="FoR">Founding of Rome</Item>
-            <Item key="MaR">Monarchy and Republic</Item>
-            <Item key="Emp">Empire</Item>
-          </TabList>
-          <TabPanels>
-            <Item key="FoR">
-              Arma virumque cano, Troiae qui primus ab oris.
-            </Item>
-            <Item key="MaR">Senatus Populusque Romanus.</Item>
-            <Item key="Emp">Alea jacta est.</Item>
-          </TabPanels>
-        </Tabs>
       </main>
 
       <footer>© Filecoin Foundation</footer>
