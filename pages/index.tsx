@@ -104,6 +104,41 @@ const NotaryCard = () => (
   </Col>
 );
 
+const CustomHeader = () => (
+  <Header className='header'>
+    <Image
+      className='logo'
+      width={34}
+      height={34}
+      src='/logo.png'
+      alt='Filecoin Plus logo'
+      title='Fil+ Leaderboard'
+      preview={false}
+    />
+  </Header>
+);
+
+const CustomFooter = () => (
+  <div>
+    <Space direction='vertical' style={{ display: 'flex', flexGrow: 1 }}>
+      <div></div>
+    </Space>
+    <Footer style={{ textAlign: 'center' }}>
+      &copy; Filecoin Foundation
+      <Divider type='vertical' />
+      <a href='#'>Terms</a>
+      <Divider type='vertical' />
+      <a href='#'>Privacy</a>
+      <Divider type='vertical' />
+      <a href='#'>Status</a>
+      <Divider type='vertical' />
+      <a href='#'>Docs</a>
+      <Divider type='vertical' />
+      <a href='#'>About</a>
+    </Footer>
+  </div>
+);
+
 const App: NextPage = () => {
   return (
     <div>
@@ -114,40 +149,13 @@ const App: NextPage = () => {
       </Head>
 
       <Layout className='layout'>
-        <Header className='header'>
-          <Image
-            className='logo'
-            width={34}
-            height={34}
-            src='/logo.png'
-            alt='Filecoin Plus logo'
-            title='Fil+ Leaderboard'
-            preview={false}
-          />
-        </Header>
+        <CustomHeader />
 
         <Content style={{ padding: '50px 50px' }}>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <NotaryCard />
-          </Row>
+          <NotaryCard />
         </Content>
 
-        <Space direction='vertical' style={{ display: 'flex', flexGrow: 1 }}>
-          <div></div>
-        </Space>
-        <Footer style={{ textAlign: 'center' }}>
-          &copy; Filecoin Foundation
-          <Divider type='vertical' />
-          <a href='#'>Terms</a>
-          <Divider type='vertical' />
-          <a href='#'>Privacy</a>
-          <Divider type='vertical' />
-          <a href='#'>Status</a>
-          <Divider type='vertical' />
-          <a href='#'>Docs</a>
-          <Divider type='vertical' />
-          <a href='#'>About</a>
-        </Footer>
+        <CustomFooter />
       </Layout>
     </div>
   );
