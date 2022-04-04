@@ -14,6 +14,7 @@ import {
   Divider,
   Space,
   Statistic,
+  Typography,
 } from 'antd';
 import {
   EditOutlined,
@@ -25,6 +26,7 @@ import {
 
 const { Meta } = Card;
 const { Header, Content, Footer } = Layout;
+const { Title } = Typography;
 
 const App: NextPage = () => {
   const gridStyle = {
@@ -35,24 +37,34 @@ const App: NextPage = () => {
   return (
     <div>
       <Layout className="layout">
-        <Header className='header'>
-          <Menu mode="horizontal" theme="light" selectable={false}>
-            <Menu.Item
-              disabled={true}
-              icon={<Image
-                width={34}
-                height={34}
-                src="/logo.png"
-                alt="Filecoin Plus logo"
-              />}>
-              {/* <Image
-                width={34}
-                height={34}
-                src="/logo.png"
-                alt="Filecoin Plus logo"
-              /> */}
-              {/* <div className="logo" /> */}
-            </Menu.Item>
+        <Header className="header">
+          {/* <Image
+            // className='logo'
+            width={34}
+            height={34}
+            // layout='fill'
+            src="/logo.png"
+            alt="Filecoin Plus logo"
+          /> */}
+          <Menu>
+          <Menu.Item icon={<Image
+            // className='logo'
+            width={34}
+            height={34}
+            // layout='fill'
+            src="/logo.png"
+            alt="Filecoin Plus logo"
+          />}>
+          <Title><Image
+            // className='logo'
+            width={34}
+            height={34}
+            // layout='fill'
+            src="/logo.png"
+            alt="Filecoin Plus logo"
+          />Fil+ Leaderboard</Title>
+          {/* <div className="logo" /> */}
+          </Menu.Item>
           </Menu>
         </Header>
 
