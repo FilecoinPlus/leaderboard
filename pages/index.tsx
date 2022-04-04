@@ -29,6 +29,64 @@ const { Meta } = Card;
 const { Header, Content, Footer } = Layout;
 const { Title, Text, Link } = Typography;
 
+const GeneralStatsCard = () => (
+  <div>
+    <Divider plain>General</Divider>
+    <Row gutter={8} justify='space-around'>
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Clients'
+            value={102}
+            valueStyle={{ fontSize: '1rem' }}
+          />
+        </Card>
+      </Col>
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Average TTD'
+            value='120 days'
+            valueStyle={{ color: '#3f8600', fontSize: '1rem' }}
+            // prefix={<ArrowUpOutlined />}
+          />
+        </Card>
+      </Col>
+    </Row>
+  </div>
+);
+
+const DatacapStatsCard = () => (
+  <div>
+    <Divider plain>DataCap</Divider>
+
+    <Row gutter={8} justify='space-around'>
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Available'
+            value={300}
+            valueStyle={{ fontSize: '1rem' }}
+            suffix='TiB'
+          />
+        </Card>
+      </Col>
+
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Allocated'
+            value={200}
+            valueStyle={{ fontSize: '1rem' }}
+            // prefix={<ArrowUpOutlined />}
+            suffix='TiB'
+          />
+        </Card>
+      </Col>
+    </Row>
+  </div>
+);
+
 const NotaryCard = () => (
   <Col span={8}>
     <Card bordered={false}>
@@ -40,56 +98,8 @@ const NotaryCard = () => (
         description='Organization'
       />
 
-      <Divider plain>General</Divider>
-
-      <Row gutter={8} justify='space-around'>
-        <Col flex='auto'>
-          <Card size='small'>
-            <Statistic
-              title='Clients'
-              value={102}
-              valueStyle={{ fontSize: '1rem' }}
-            />
-          </Card>
-        </Col>
-        <Col flex='auto'>
-          <Card size='small'>
-            <Statistic
-              title='Average TTD'
-              value='120 days'
-              valueStyle={{ color: '#3f8600', fontSize: '1rem' }}
-              // prefix={<ArrowUpOutlined />}
-            />
-          </Card>
-        </Col>
-      </Row>
-
-      <Divider plain>DataCap</Divider>
-
-      <Row gutter={8} justify='space-around'>
-        <Col flex='auto'>
-          <Card size='small'>
-            <Statistic
-              title='Available'
-              value={300}
-              valueStyle={{ fontSize: '1rem' }}
-              suffix='TiB'
-            />
-          </Card>
-        </Col>
-
-        <Col flex='auto'>
-          <Card size='small'>
-            <Statistic
-              title='Allocated'
-              value={200}
-              valueStyle={{ fontSize: '1rem' }}
-              // prefix={<ArrowUpOutlined />}
-              suffix='TiB'
-            />
-          </Card>
-        </Col>
-      </Row>
+      <GeneralStatsCard />
+      <DatacapStatsCard />
     </Card>
   </Col>
 );
