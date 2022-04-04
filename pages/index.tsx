@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
+// import Head from 'next/head';
+// import Image from 'next/image';
 // import styles from '../styles/Home.module.css'
 import {
   Card,
@@ -15,6 +15,7 @@ import {
   Space,
   Statistic,
   Typography,
+  Image
 } from 'antd';
 import {
   EditOutlined,
@@ -38,34 +39,23 @@ const App: NextPage = () => {
     <div>
       <Layout className="layout">
         <Header className="header">
-          {/* <Image
-            // className='logo'
+          <Image
+            className='logo'
             width={34}
             height={34}
-            // layout='fill'
             src="/logo.png"
             alt="Filecoin Plus logo"
-          /> */}
-          <Link href="/">
-            <Image
-              // className='logo'
-              width={34}
-              height={34}
-              // layout='fill'
-              src="/logo.png"
-              alt="Filecoin Plus logo"
-              title="Fil+ Leaderboard"
-              style={{verticalAlign: 'bottom'}}
-            />
-            <Text style={{fontSize: '1rem', marginLeft: '15px'}}>Fil+ Leaderboard</Text>
-          </Link>
-          {/* <div className="logo" /> */}
+            title='Fil+ Leaderboard'
+            preview={false}
+          />
         </Header>
 
         <Content style={{ padding: '50px 50px' }}>
           <div className="site-card-wrapper">
+
             <Row gutter={16}>
-              <Col span={8}>
+
+              <Col span={6}>
                 <Card bordered={false}>
                   <Meta
                     avatar={
@@ -75,14 +65,15 @@ const App: NextPage = () => {
                     description="Organization"
                   />
                   <Divider plain>General</Divider>
-                  <Divider plain>DataCap</Divider>
                   <Row>
                     <Col span={12}>
+                    <Card size="small">
                       <Statistic
-                        title="Active Users"
-                        value={112893}
+                        title="Clients"
+                        value={102}
                         valueStyle={{ fontSize: '1rem' }}
                       />
+                      </Card>
                     </Col>
                     <Col span={12}>
                       <Card size="small">
@@ -95,9 +86,35 @@ const App: NextPage = () => {
                       </Card>
                     </Col>
                   </Row>
+                  <Divider plain>DataCap</Divider>
+                  <Row>
+                    <Col span={12}>
+                    <Card size="small">
+                      <Statistic
+                        title="Available"
+                        value={300}
+                        valueStyle={{ fontSize: '1rem' }}
+                        suffix='TiB'
+                      />
+                      </Card>
+                    </Col>
+                    <Col span={12}>
+                      <Card size="small">
+                        <Statistic
+                          title="Allocated"
+                          value={200}
+                          valueStyle={{ fontSize: '1rem' }}
+                          // prefix={<ArrowUpOutlined />}
+                          suffix='TiB'
+                        />
+                      </Card>
+                    </Col>
+                  </Row>
                 </Card>
               </Col>
+
             </Row>
+
           </div>
         </Content>
 
