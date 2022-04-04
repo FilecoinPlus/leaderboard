@@ -35,15 +35,19 @@ const App: NextPage = () => {
   return (
     <div>
       <Layout className="layout">
+          <Menu mode='horizontal' theme='light'>
         <Header>
           <Image
-            // width={200}
-            layout="fill"
+            width={34}
+            height={34}
+            // layout="fill"
             src="/logo.png"
             alt="Filecoin Plus logo"
+            style={{maxWidth: '34px', maxHeight: '34px'}}
           />
           <div className="logo" />
         </Header>
+        </Menu>
 
         <Content style={{ padding: '50px 50px' }}>
           <div className="site-card-wrapper">
