@@ -23,6 +23,7 @@ import {
   SettingOutlined,
   ArrowUpOutlined,
   ArrowDownOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons';
 
 const { Meta } = Card;
@@ -30,7 +31,7 @@ const { Header, Content, Footer } = Layout;
 const { Title, Text, Link } = Typography;
 
 const GeneralStatsCard = () => (
-  <div>
+  <div className='GeneralStatsCard'>
     <Divider plain>General</Divider>
     <Row gutter={8} justify='space-around'>
       <Col flex='auto'>
@@ -57,7 +58,7 @@ const GeneralStatsCard = () => (
 );
 
 const DatacapStatsCard = () => (
-  <div>
+  <div className='DatacapStatsCard'>
     <Divider plain>DataCap</Divider>
 
     <Row gutter={8} justify='space-around'>
@@ -88,24 +89,26 @@ const DatacapStatsCard = () => (
 );
 
 const NotaryCard = () => (
-  <Col span={8}>
-    <Card bordered={false}>
-      <Meta
-        avatar={
-          <Avatar src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
-        }
-        title='Notary Name'
-        description='Organization'
-      />
+  <div style={{minWidth: '210px', maxWidth: '400px'}}>
+    <Col className='NotaryCard'>
+      <Card bordered={false} actions={[<Text key='location'><GlobalOutlined style={{marginRight: '8px', color: '#020202'}} />North America</Text>]}>
+        <Meta
+          avatar={
+            <Avatar src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
+          }
+          title='Notary Name'
+          description='Organization'
+        />
 
-      <GeneralStatsCard />
-      <DatacapStatsCard />
-    </Card>
-  </Col>
+        <GeneralStatsCard />
+        <DatacapStatsCard />
+      </Card>
+    </Col>
+  </div>
 );
 
-const CustomHeader = () => (
-  <Header className='header'>
+const CustomLayoutHeader = () => (
+  <Header className='header CustomLayoutHeader'>
     <Image
       className='logo'
       width={34}
@@ -118,8 +121,8 @@ const CustomHeader = () => (
   </Header>
 );
 
-const CustomFooter = () => (
-  <div>
+const CustomLayoutFooter = () => (
+  <div className='CustomLayoutFooter'>
     <Space direction='vertical' style={{ display: 'flex', flexGrow: 1 }}>
       <div></div>
     </Space>
@@ -141,7 +144,7 @@ const CustomFooter = () => (
 
 const App: NextPage = () => {
   return (
-    <div>
+    <div className='App'>
       <Head>
         <title>Filecoin Plus - Leaderboard</title>
         <meta name='description' content='Filecoin Plus - Leaderboard App' />
@@ -149,13 +152,15 @@ const App: NextPage = () => {
       </Head>
 
       <Layout className='layout'>
-        <CustomHeader />
+        <CustomLayoutHeader />
 
         <Content style={{ padding: '50px 50px' }}>
-          <NotaryCard />
+          <Col>
+            <NotaryCard />
+          </Col>
         </Content>
 
-        <CustomFooter />
+        <CustomLayoutFooter />
       </Layout>
     </div>
   );
