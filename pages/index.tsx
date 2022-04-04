@@ -15,7 +15,7 @@ import {
   Space,
   Statistic,
   Typography,
-  Image
+  Image,
 } from 'antd';
 import {
   EditOutlined,
@@ -40,22 +40,19 @@ const App: NextPage = () => {
       <Layout className="layout">
         <Header className="header">
           <Image
-            className='logo'
+            className="logo"
             width={34}
             height={34}
             src="/logo.png"
             alt="Filecoin Plus logo"
-            title='Fil+ Leaderboard'
+            title="Fil+ Leaderboard"
             preview={false}
           />
         </Header>
 
         <Content style={{ padding: '50px 50px' }}>
-          <div className="site-card-wrapper">
-
-            <Row gutter={16}>
-
-              <Col span={6}>
+          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              <Col span={8}>
                 <Card bordered={false}>
                   <Meta
                     avatar={
@@ -63,59 +60,63 @@ const App: NextPage = () => {
                     }
                     title="Notary Name"
                     description="Organization"
+                    style={{marginBottom:0}}
                   />
+
                   <Divider plain>General</Divider>
-                  <Row>
-                    <Col span={12}>
+
+                  <Row gutter={8} justify="space-around">
+                  <Col flex='auto'>
                     <Card size="small">
                       <Statistic
                         title="Clients"
                         value={102}
                         valueStyle={{ fontSize: '1rem' }}
                       />
-                      </Card>
-                    </Col>
-                    <Col span={12}>
-                      <Card size="small">
-                        <Statistic
-                          title="Average TTD"
-                          value="120 days"
-                          valueStyle={{ color: '#3f8600', fontSize: '1rem' }}
-                          // prefix={<ArrowUpOutlined />}
-                        />
-                      </Card>
-                    </Col>
+                    </Card>
+                  </Col>
+                  <Col flex='auto'>
+                    <Card size="small">
+                      <Statistic
+                        title="Average TTD"
+                        value="120 days"
+                        valueStyle={{ color: '#3f8600', fontSize: '1rem' }}
+                        // prefix={<ArrowUpOutlined />}
+                      />
+                    </Card>
+                  </Col>
                   </Row>
+
                   <Divider plain>DataCap</Divider>
-                  <Row>
-                    <Col span={12}>
+
+                  <Row gutter={8} justify="space-around">
+                  <Col flex='auto'>
                     <Card size="small">
                       <Statistic
                         title="Available"
                         value={300}
                         valueStyle={{ fontSize: '1rem' }}
-                        suffix='TiB'
+                        suffix="TiB"
                       />
-                      </Card>
-                    </Col>
-                    <Col span={12}>
-                      <Card size="small">
-                        <Statistic
-                          title="Allocated"
-                          value={200}
-                          valueStyle={{ fontSize: '1rem' }}
-                          // prefix={<ArrowUpOutlined />}
-                          suffix='TiB'
-                        />
-                      </Card>
-                    </Col>
+                    </Card>
+                  </Col>
+
+                  <Col flex='auto'>
+                    <Card size="small">
+                      <Statistic
+                        title="Allocated"
+                        value={200}
+                        valueStyle={{ fontSize: '1rem' }}
+                        // prefix={<ArrowUpOutlined />}
+                        suffix="TiB"
+                      />
+                    </Card>
+                  </Col>
                   </Row>
+
                 </Card>
               </Col>
-
-            </Row>
-
-          </div>
+          </Row>
         </Content>
 
         <Space direction="vertical" style={{ display: 'flex', flexGrow: 1 }}>
