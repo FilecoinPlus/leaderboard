@@ -26,7 +26,7 @@ import {
 
 const { Meta } = Card;
 const { Header, Content, Footer } = Layout;
-const { Title } = Typography;
+const { Title, Text, Link } = Typography;
 
 const App: NextPage = () => {
   const gridStyle = {
@@ -46,26 +46,20 @@ const App: NextPage = () => {
             src="/logo.png"
             alt="Filecoin Plus logo"
           /> */}
-          <Menu>
-          <Menu.Item icon={<Image
-            // className='logo'
-            width={34}
-            height={34}
-            // layout='fill'
-            src="/logo.png"
-            alt="Filecoin Plus logo"
-          />}>
-          <Title><Image
-            // className='logo'
-            width={34}
-            height={34}
-            // layout='fill'
-            src="/logo.png"
-            alt="Filecoin Plus logo"
-          />Fil+ Leaderboard</Title>
+          <Link href="/">
+            <Image
+              // className='logo'
+              width={34}
+              height={34}
+              // layout='fill'
+              src="/logo.png"
+              alt="Filecoin Plus logo"
+              title="Fil+ Leaderboard"
+              style={{verticalAlign: 'bottom'}}
+            />
+            <Text style={{fontSize: '1rem', marginLeft: '15px'}}>Fil+ Leaderboard</Text>
+          </Link>
           {/* <div className="logo" /> */}
-          </Menu.Item>
-          </Menu>
         </Header>
 
         <Content style={{ padding: '50px 50px' }}>
