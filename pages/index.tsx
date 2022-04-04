@@ -163,9 +163,23 @@ const App: NextPage = () => {
         <CustomLayoutHeader />
 
         <Content style={{ padding: '50px 50px' }}>
-          <Col>
-            <NotaryCard />
-          </Col>
+
+          <Row gutter={16} style={{rowGap: '20px'}}>
+            <Col span={8}>
+              <NotaryCard />
+            </Col>
+            <Col span={8}>
+              <NotaryCard />
+            </Col>
+
+            <Col span={8}>
+              <NotaryCard />
+            </Col>
+            <Col span={8}>
+              <NotaryCard />
+            </Col>
+          </Row>
+
         </Content>
 
         <CustomLayoutFooter />
