@@ -89,9 +89,17 @@ const DatacapStatsCard = () => (
 );
 
 const NotaryCard = () => (
-  <div style={{minWidth: '210px', maxWidth: '400px'}}>
+  <div style={{ minWidth: '210px', maxWidth: '400px' }}>
     <Col className='NotaryCard'>
-      <Card bordered={false} actions={[<Text key='location'><GlobalOutlined style={{marginRight: '8px', color: '#020202'}} />North America</Text>]}>
+      <Card
+        bordered={false}
+        actions={[
+          <Text key='location' style={{ color: '#6e6e6e' }}>
+            <GlobalOutlined style={{ marginRight: '8px' }} />
+            North America
+          </Text>,
+        ]}
+      >
         <Meta
           avatar={
             <Avatar src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
