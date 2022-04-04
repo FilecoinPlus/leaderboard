@@ -35,19 +35,26 @@ const App: NextPage = () => {
   return (
     <div>
       <Layout className="layout">
-          <Menu mode='horizontal' theme='light'>
-        <Header>
-          <Image
-            width={34}
-            height={34}
-            // layout="fill"
-            src="/logo.png"
-            alt="Filecoin Plus logo"
-            style={{maxWidth: '34px', maxHeight: '34px'}}
-          />
-          <div className="logo" />
+        <Header className='header'>
+          <Menu mode="horizontal" theme="light" selectable={false}>
+            <Menu.Item
+              disabled={true}
+              icon={<Image
+                width={34}
+                height={34}
+                src="/logo.png"
+                alt="Filecoin Plus logo"
+              />}>
+              {/* <Image
+                width={34}
+                height={34}
+                src="/logo.png"
+                alt="Filecoin Plus logo"
+              /> */}
+              {/* <div className="logo" /> */}
+            </Menu.Item>
+          </Menu>
         </Header>
-        </Menu>
 
         <Content style={{ padding: '50px 50px' }}>
           <div className="site-card-wrapper">
@@ -64,15 +71,14 @@ const App: NextPage = () => {
                   <Divider plain>General</Divider>
                   <Divider plain>DataCap</Divider>
                   <Row>
-
                     <Col span={12}>
                       <Statistic
                         title="Active Users"
                         value={112893}
                         valueStyle={{ fontSize: '1rem' }}
                       />
-                      </Col>
-                      <Col span={12}>
+                    </Col>
+                    <Col span={12}>
                       <Card size="small">
                         <Statistic
                           title="Average TTD"
@@ -82,7 +88,6 @@ const App: NextPage = () => {
                         />
                       </Card>
                     </Col>
-
                   </Row>
                 </Card>
               </Col>
