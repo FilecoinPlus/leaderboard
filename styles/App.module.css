@@ -1,0 +1,19 @@
+.layout {
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #fff;
+}
+
+.ant-card-meta-title {
+  margin-bottom: 0 !important;
+}
+
+.notary-cards {
+  align-items: flex-start;
+}
+
+.notary-cards .notary-card {
+  display: contents;
+}

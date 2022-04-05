@@ -1,7 +1,8 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
+// import fetch from '@vercel/fetch';
 // import Image from 'next/image';
-// import styles from '../styles/Home.module.css'
+// import styles from '../styles/App.module.css'
 import {
   Card,
   Avatar,
@@ -24,106 +25,49 @@ import {
   ArrowUpOutlined,
   ArrowDownOutlined,
   GlobalOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
+import prettyBytes from 'pretty-bytes';
 
 const { Meta } = Card;
-const { Header, Content, Footer } = Layout;
+const { Header, Content, Footer, Sider } = Layout;
 const { Title, Text, Link } = Typography;
 
-const GeneralStatsCard = () => (
-  <div className='GeneralStatsCard'>
-    <Divider plain>General</Divider>
-    <Row gutter={8} justify='space-around'>
-      <Col flex='auto'>
-        <Card size='small'>
-          <Statistic
-            title='Clients'
-            value={102}
-            valueStyle={{ fontSize: '1rem' }}
-          />
-        </Card>
-      </Col>
-      <Col flex='auto'>
-        <Card size='small'>
-          <Statistic
-            title='Average TTD'
-            value='120 days'
-            valueStyle={{ color: '#3f8600', fontSize: '1rem' }}
-            // prefix={<ArrowUpOutlined />}
-          />
-        </Card>
-      </Col>
-    </Row>
-  </div>
-);
+type Notary = {
+  name: string;
+  organization: string;
+  address: string;
+  addressId: string;
+  verifiedClientsCount: number;
+  allowance: number;
+  initialAllowance: number;
+  auditTrail: string;
+};
 
-const DatacapStatsCard = () => (
-  <div className='DatacapStatsCard'>
-    <Divider plain>DataCap</Divider>
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(
+    'https://api.filplus.d.interplanetary.one/api/getVerifiers?limit=50&page=1'
+  );
+  const notaries = await res.json();
 
-    <Row gutter={8} justify='space-around'>
-      <Col flex='auto'>
-        <Card size='small'>
-          <Statistic
-            title='Available'
-            value={300}
-            valueStyle={{ fontSize: '1rem' }}
-            suffix='TiB'
-          />
-        </Card>
-      </Col>
+  // console.log(notaries);
 
-      <Col flex='auto'>
-        <Card size='small'>
-          <Statistic
-            title='Allocated'
-            value={200}
-            valueStyle={{ fontSize: '1rem' }}
-            // prefix={<ArrowUpOutlined />}
-            suffix='TiB'
-          />
-        </Card>
-      </Col>
-    </Row>
-  </div>
-);
-
-const NotaryCard = () => (
-  <div style={{ minWidth: '210px', maxWidth: '400px' }}>
-    <Col className='NotaryCard'>
-      <Card
-        bordered={false}
-        actions={[
-          <Text key='location' style={{ color: '#6e6e6e' }}>
-            <GlobalOutlined style={{ marginRight: '8px' }} />
-            North America
-          </Text>,
-        ]}
-      >
-        <Meta
-          avatar={
-            <Avatar src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
-          }
-          title='Notary Name'
-          description='Organization'
-        />
-
-        <GeneralStatsCard />
-        <DatacapStatsCard />
-      </Card>
-    </Col>
-  </div>
-);
+  return {
+    props: {
+      notaries,
+    },
+  };
+};
 
 const CustomLayoutHeader = () => (
   <Header className='header CustomLayoutHeader'>
     <Image
       className='logo'
-      width={34}
+      // width={34}
       height={34}
-      src='/logo.png'
-      alt='Filecoin Plus logo'
-      title='Fil+ Leaderboard'
+      src='/filecoin-plus-leaderboard-logo-new.png'
+      alt='Filecoin Plus Leaderboard logo'
+      title='Filecoin Plus Leaderboard'
       preview={false}
     />
   </Header>
@@ -150,7 +94,97 @@ const CustomLayoutFooter = () => (
   </div>
 );
 
-const App: NextPage = () => {
+const GeneralStatsCard = (props: any) => (
+  <div className='GeneralStatsCard'>
+    <Divider plain>General</Divider>
+    <Row gutter={8} justify='space-around'>
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Clients'
+            value={props.clients}
+            valueStyle={{ fontSize: '1rem' }}
+          />
+        </Card>
+      </Col>
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Average TTD'
+            value='120 days'
+            valueStyle={{ fontSize: '1rem' }}
+            // prefix={<ArrowUpOutlined />}
+          />
+        </Card>
+      </Col>
+    </Row>
+  </div>
+);
+
+const DatacapStatsCard = (props: any) => (
+  <div className='DatacapStatsCard'>
+    <Divider plain>DataCap</Divider>
+
+    <Row gutter={8} justify='space-around'>
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Available'
+            value={props.datacapAvailable}
+            valueStyle={{ fontSize: '1rem' }}
+            // suffix='TiB'
+          />
+        </Card>
+      </Col>
+
+      <Col flex='auto'>
+        <Card size='small'>
+          <Statistic
+            title='Allocated'
+            value={props.datacapAllocated}
+            valueStyle={{ fontSize: '1rem' }}
+            // prefix={<ArrowUpOutlined />}
+            // suffix='TiB'
+          />
+        </Card>
+      </Col>
+    </Row>
+  </div>
+);
+
+const NotaryCard = (props: any) => (
+  <Col className='notary-card' span={4}>
+    <Col
+      className='NotaryCard'
+      style={{ minWidth: '360px', maxWidth: '400px', width: '360px' }}
+    >
+      <Card
+        bordered={false}
+        actions={[
+          <Text key='location' style={{ color: '#6e6e6e' }}>
+            <GlobalOutlined style={{ marginRight: '8px' }} />
+            North America
+          </Text>,
+        ]}
+      >
+        <Meta
+          avatar={<Avatar icon={<UserOutlined />} size={46} />}
+          title={<Link href={props.url} target="_blank" color='262626'>{props.name}</Link>}
+          description={props.addressId}
+        />
+
+        <GeneralStatsCard clients={props.clients} />
+        <DatacapStatsCard datacapAvailable={props.datacapAvailable} datacapAllocated={props.datacapAllocated} />
+      </Card>
+    </Col>
+  </Col>
+);
+
+const App: NextPage = (
+  pageProps: InferGetStaticPropsType<typeof getStaticProps>
+) => {
+  // console.log(pageProps);
+
   return (
     <div className='App'>
       <Head>
@@ -161,25 +195,33 @@ const App: NextPage = () => {
 
       <Layout className='layout'>
         <CustomLayoutHeader />
+        {/* <Sider>Sider</Sider> */}
 
         <Content style={{ padding: '50px 50px' }}>
-
-          <Row gutter={16} style={{rowGap: '20px'}}>
-            <Col span={8}>
-              <NotaryCard />
-            </Col>
-            <Col span={8}>
-              <NotaryCard />
-            </Col>
-
-            <Col span={8}>
-              <NotaryCard />
-            </Col>
-            <Col span={8}>
-              <NotaryCard />
-            </Col>
+          <Row
+            className='notary-cards'
+            gutter={16}
+            style={{ rowGap: '20px' }}
+            justify='center'
+          >
+            {pageProps.notaries.data
+              .filter((v: Notary) => !!v.name)
+              .map((notary: Notary) => (
+                // console.log(notary)
+                // console.log(bytesToSize(notary.initialAllowance)),
+                // console.log(/^https?/i.test(notary.auditTrail)),
+                <NotaryCard
+                  name={notary.name}
+                  organization='Organization'
+                  addressId={notary.addressId}
+                  clients={notary.verifiedClientsCount}
+                  datacapAvailable={prettyBytes(Number(notary.allowance), {binary: true})}
+                  // datacapAllocated={bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))}
+                  datacapAllocated={prettyBytes(Number(notary.initialAllowance), {binary: true})}
+                  url={/^https?/i.test(notary.auditTrail) && notary.auditTrail}
+                />
+              ))}
           </Row>
-
         </Content>
 
         <CustomLayoutFooter />
