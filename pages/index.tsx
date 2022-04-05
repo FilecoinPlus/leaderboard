@@ -206,11 +206,12 @@ const App: NextPage = (
           >
             {pageProps.notaries.data
               .filter((v: Notary) => !!v.name)
-              .map((notary: Notary) => (
+              .map((notary: Notary, index: any) => (
                 // console.log(notary)
                 // console.log(bytesToSize(notary.initialAllowance)),
                 // console.log(/^https?/i.test(notary.auditTrail)),
                 <NotaryCard
+                  key={index}
                   name={notary.name}
                   organization='Organization'
                   addressId={notary.addressId}
