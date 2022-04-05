@@ -46,7 +46,8 @@ type Notary = {
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
-    'https://api.filplus.d.interplanetary.one/api/getVerifiers?limit=50&page=1'
+    // 'https://api.filplus.d.interplanetary.one/api/getVerifiers?limit=50&page=1'
+    'https://api.filplus.d.interplanetary.one/api/getVerifiers'
   );
   const notaries = await res.json();
 
@@ -111,7 +112,7 @@ const GeneralStatsCard = (props: any) => (
         <Card size='small'>
           <Statistic
             title='Average TTD'
-            value='120 days'
+            value='-'
             valueStyle={{ fontSize: '1rem' }}
             // prefix={<ArrowUpOutlined />}
           />
@@ -218,7 +219,7 @@ const App: NextPage = (
                   clients={notary.verifiedClientsCount}
                   datacapAvailable={prettyBytes(Number(notary.allowance), {binary: true})}
                   // datacapAllocated={bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))}
-                  datacapAllocated={prettyBytes(Number(notary.initialAllowance), {binary: true})}
+                  datacapAllocated={prettyBytes((Number(notary.initialAllowance)-(notary.allowance)), {binary: true})}
                   url={/^https?/i.test(notary.auditTrail) && notary.auditTrail}
                 />
               ))}
