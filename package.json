@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@ant-design/pro-card": "^1.19.1",
     "@vercel/fetch": "^6.2.0",
     "antd": "^4.19.5",
     "next": "12.1.4",

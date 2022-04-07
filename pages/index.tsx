@@ -199,6 +199,7 @@ const App: NextPage = (
         {/* <Sider>Sider</Sider> */}
 
         <Content style={{ padding: '50px 50px' }}>
+
           <Row
             className='notary-cards'
             gutter={16}
