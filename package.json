@@ -11,8 +11,10 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-card": "^1.19.1",
+    "@types/lodash": "^4.14.181",
     "@vercel/fetch": "^6.2.0",
     "antd": "^4.19.5",
+    "lodash": "^4.17.21",
     "next": "12.1.4",
     "next-plugin-antd-less": "^1.8.0",
     "pretty-bytes": "^6.0.0",
