@@ -5,7 +5,7 @@ import {
   Row,
 } from 'antd';
 import prettyBytes from 'pretty-bytes';
-import getVerifiersMock from './getVerifiersMock';
+import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
 
 import {

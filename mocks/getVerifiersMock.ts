@@ -1,4 +1,4 @@
-export default {
+export const getVerifiersMock = {
   data: [
     {
       id: 26,
@@ -918,3 +918,5 @@ export default {
     },
   ],
 };
+
+export default getVerifiersMock;
