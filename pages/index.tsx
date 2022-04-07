@@ -1,9 +1,6 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import {
-  Layout,
-  Row,
-} from 'antd';
+import { Layout, Row, Typography, Divider, Input, Select } from 'antd';
 import prettyBytes from 'pretty-bytes';
 import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
@@ -12,9 +9,12 @@ import {
   CustomLayoutHeader,
   CustomLayoutFooter,
   NotaryCard,
-} from '../components'
+  NotaryTable,
+} from '../components';
 
 const { Content } = Layout;
+const { Title } = Typography;
+const { Option } = Select;
 
 type Notary = {
   name: string;
@@ -35,7 +35,11 @@ export const getStaticProps: GetStaticProps = async () => {
   // const notaries = await res.json();
 
   const notariesMock = getVerifiersMock;
-  const notaries = _.orderBy(notariesMock.data, ['verifiedClientsCount', 'initialAllowance'], ['desc', 'desc']);
+  const notaries = _.orderBy(
+    notariesMock.data,
+    ['verifiedClientsCount', 'initialAllowance'],
+    ['desc', 'desc']
+  );
   // console.log('notariesSorted ->', notariesSorted);
 
   // console.log(notaries);
@@ -65,12 +69,23 @@ const App: NextPage = (
         {/* <Sider>Sider</Sider> */}
 
         <Content style={{ padding: '50px 50px' }}>
+          <Title style={{ textAlign: 'center' }}>Notaries</Title>
+          <Divider
+            style={{
+              background: 'linear-gradient(145deg,#c65aff,#248dff)',
+              height: '6px',
+              // minWidth: '24px',
+              // width: '24px'
+            }}
+          />
+
+          <NotaryTable props={pageProps} />
 
           <Row
             className='notary-cards'
             gutter={16}
             style={{ rowGap: '20px' }}
-            justify='center'
+            // justify='center'
           >
             {pageProps.notaries
               .filter((v: Notary) => !!v.name)
@@ -84,9 +99,14 @@ const App: NextPage = (
                   organization='Organization'
                   addressId={notary.addressId}
                   clients={notary.verifiedClientsCount}
-                  datacapAvailable={prettyBytes(Number(notary.allowance), {binary: true})}
+                  datacapAvailable={prettyBytes(Number(notary.allowance), {
+                    binary: true,
+                  })}
                   // datacapAllocated={bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))}
-                  datacapAllocated={prettyBytes((Number(notary.initialAllowance)-(notary.allowance)), {binary: true})}
+                  datacapAllocated={prettyBytes(
+                    Number(notary.initialAllowance) - notary.allowance,
+                    { binary: true }
+                  )}
                   url={/^https?/i.test(notary.auditTrail) && notary.auditTrail}
                 />
               ))}
