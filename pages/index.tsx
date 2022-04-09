@@ -81,7 +81,8 @@ const App: NextPage = (
 
           <NotaryTable props={pageProps} />
 
-          <Row
+          {/* Notary Cards */}
+          {/* <Row
             className='notary-cards'
             gutter={16}
             style={{ rowGap: '20px' }}
@@ -110,7 +111,7 @@ const App: NextPage = (
                   url={/^https?/i.test(notary.auditTrail) && notary.auditTrail}
                 />
               ))}
-          </Row>
+          </Row> */}
         </Content>
 
         <CustomLayoutFooter />

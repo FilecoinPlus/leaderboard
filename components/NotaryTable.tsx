@@ -1,11 +1,11 @@
-import { Table, Tag, Space, Input, Button, Typography } from 'antd';
+import { Table, Tag, Space, Input, Button, Typography, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import _ from 'lodash';
 import prettyBytes from 'pretty-bytes';
 import { SearchOutlined } from '@ant-design/icons';
 // import Highlighter from 'react-highlight-words';
 
-const { Link } = Typography;
+const { Link, Text } = Typography;
 
 type Notary = {
   key: number;
@@ -34,11 +34,23 @@ export const NotaryTable = (props: any) => {
       // defaultSortOrder: 'descend',
       sorter: true,
       fixed: true,
+      render: (value, record, index) => {
+        // console.log('value ->', value);
+        // console.log('record ->', record);
+        // console.log('index ->', index);
+        return (<Link href={record.url} style={{color: 'inherit'}}>{value}</Link>)
+      },
     },
     {
       key: 'organization',
       title: 'Organization',
       dataIndex: 'organization',
+      sorter: true,
+    },
+    {
+      key: 'location',
+      title: 'Location',
+      dataIndex: 'location',
       sorter: true,
     },
     {
@@ -54,18 +66,39 @@ export const NotaryTable = (props: any) => {
       sorter: (a, b) => a.clients - b.clients,
     },
     {
+      key: 'averageTtd',
+      title: 'Average TTD',
+      dataIndex: 'averageTtd',
+      sorter: true,
+    },
+    {
+      key: 'datacapTotal',
+      title: 'DataCap Total',
+      dataIndex: 'datacapTotal',
+      align: 'right',
+      sorter: (a, b) => a.datacapTotalRaw - b.datacapTotalRaw,
+    },
+    {
       key: 'datacapAvailable',
       title: 'DataCap Available',
       dataIndex: 'datacapAvailable',
-      sorter: (a, b) =>
-        parseFloat(a.datacapAvailable) - parseFloat(b.datacapAvailable),
+      align: 'right',
+      sorter: (a, b) => a.datacapAvailableRaw - b.datacapAvailableRaw,
     },
     {
       key: 'datacapAllocated',
       title: 'DataCap Allocated',
       dataIndex: 'datacapAllocated',
-      sorter: (a, b) =>
-        parseFloat(a.datacapAllocated) - parseFloat(b.datacapAllocated),
+      align: 'right',
+      // onCell: (record, rowIndex) => {
+      //   // console.log('record ->', record);
+      //   // console.log('rowIndex ->', rowIndex);
+        
+      //   return {
+      //     align: 'left',
+      //   };
+      // },
+      sorter: (a, b) => a.datacapAllocatedRaw - b.datacapAllocatedRaw,
     },
   ];
 
@@ -90,16 +123,40 @@ export const NotaryTable = (props: any) => {
       name: notary.name,
       organization: 'Organization',
       addressId: notary.addressId,
+      url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
       clients: notary.verifiedClientsCount,
       datacapAvailable: prettyBytes(Number(notary.allowance), {
         binary: true,
       }),
+      datacapAvailableRaw: Number(notary.allowance),
       // datacapAllocated: bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))
       datacapAllocated: prettyBytes(
-        Number(notary.initialAllowance) - notary.allowance,
+        Number(notary.initialAllowance) - Number(notary.allowance),
         { binary: true }
       ),
+      datacapAllocatedRaw:
+        Number(notary.initialAllowance) - Number(notary.allowance),
+      datacapTotal: prettyBytes(
+        Number(notary.initialAllowance) + Number(notary.allowance),
+        { binary: true }
+      ),
+      datacapTotalRaw:
+        Number(notary.initialAllowance) + Number(notary.allowance),
     }));
 
-  return <Table columns={columns} dataSource={data} onChange={onChange} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      onChange={onChange}
+      // onHeaderRow={(record, rowIndex) => {
+      //   // console.log('record ->', record);
+      //   // console.log('rowIndex ->', rowIndex);
+        
+      //   return {
+      //     align: 'left',
+      //   };
+      // }}
+    />
+  );
 };
