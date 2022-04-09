@@ -38,7 +38,11 @@ export const NotaryTable = (props: any) => {
         // console.log('value ->', value);
         // console.log('record ->', record);
         // console.log('index ->', index);
-        return (<Link href={record.url} style={{color: 'inherit'}}>{value}</Link>)
+        return (
+          <Link href={record.url} style={{ color: 'inherit' }}>
+            {value}
+          </Link>
+        );
       },
     },
     {
@@ -69,7 +73,8 @@ export const NotaryTable = (props: any) => {
       key: 'averageTtd',
       title: 'Average TTD',
       dataIndex: 'averageTtd',
-      sorter: true,
+      defaultSortOrder: 'ascend',
+      sorter: (a, b) => a.averageTtdRaw - b.averageTtdRaw,
     },
     {
       key: 'datacapTotal',
@@ -93,7 +98,7 @@ export const NotaryTable = (props: any) => {
       // onCell: (record, rowIndex) => {
       //   // console.log('record ->', record);
       //   // console.log('rowIndex ->', rowIndex);
-        
+
       //   return {
       //     align: 'left',
       //   };
@@ -116,43 +121,55 @@ export const NotaryTable = (props: any) => {
   //   },
   // ];
 
+  // console.log('props ->', props);
+
   const data: Notary[] = props.props.notaries
     .filter((v: any) => !!v.name)
-    .map((notary: any, index: any) => ({
-      key: index,
-      name: notary.name,
-      organization: 'Organization',
-      addressId: notary.addressId,
-      url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
-      clients: notary.verifiedClientsCount,
-      datacapAvailable: prettyBytes(Number(notary.allowance), {
-        binary: true,
-      }),
-      datacapAvailableRaw: Number(notary.allowance),
-      // datacapAllocated: bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))
-      datacapAllocated: prettyBytes(
-        Number(notary.initialAllowance) - Number(notary.allowance),
-        { binary: true }
-      ),
-      datacapAllocatedRaw:
-        Number(notary.initialAllowance) - Number(notary.allowance),
-      datacapTotal: prettyBytes(
-        Number(notary.initialAllowance) + Number(notary.allowance),
-        { binary: true }
-      ),
-      datacapTotalRaw:
-        Number(notary.initialAllowance) + Number(notary.allowance),
-    }));
+    .filter((v: any) => v.name != 'n/a')
+    .map((notary: any, index: any) => {
+      const notaryName = notary.name.match(/(^[^\(]+)/i);
+      const orgName = notary.name.match(/\(([^\(\)]+)\)/i);
+      return {
+        key: index,
+        name: notaryName && notaryName[0],
+        organization: orgName && orgName[1],
+        addressId: notary.addressId,
+        url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
+        clients: notary.verifiedClientsCount,
+        datacapAvailable: prettyBytes(Number(notary.allowance), {
+          binary: true,
+        }),
+        datacapAvailableRaw: Number(notary.allowance),
+        // datacapAllocated: bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))
+        datacapAllocated: prettyBytes(
+          Number(notary.initialAllowance) - Number(notary.allowance),
+          { binary: true }
+        ),
+        datacapAllocatedRaw:
+          Number(notary.initialAllowance) - Number(notary.allowance),
+        datacapTotal: prettyBytes(
+          Number(notary.initialAllowance) + Number(notary.allowance),
+          { binary: true }
+        ),
+        datacapTotalRaw:
+          Number(notary.initialAllowance) + Number(notary.allowance),
+        averageTtd: notary.ttdAverages.averageTtdInDuration || '',
+        averageTtdRaw: notary.ttdAverages.averageTtdInSeconds || 999999999,
+      };
+    });
 
   return (
     <Table
       columns={columns}
       dataSource={data}
       onChange={onChange}
+      pagination={{
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
+      }}
       // onHeaderRow={(record, rowIndex) => {
       //   // console.log('record ->', record);
       //   // console.log('rowIndex ->', rowIndex);
-        
+
       //   return {
       //     align: 'left',
       //   };

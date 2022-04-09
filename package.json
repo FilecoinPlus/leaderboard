@@ -15,6 +15,7 @@
     "@vercel/fetch": "^6.2.0",
     "antd": "^4.19.5",
     "lodash": "^4.17.21",
+    "moment": "^2.29.2",
     "next": "12.1.4",
     "next-plugin-antd-less": "^1.8.0",
     "pretty-bytes": "^6.0.0",

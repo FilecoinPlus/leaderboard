@@ -1,9 +1,9 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { Layout, Row, Typography, Divider, Input, Select } from 'antd';
-import prettyBytes from 'pretty-bytes';
 import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
+import moment from 'moment';
 
 import {
   CustomLayoutHeader,
@@ -28,21 +28,112 @@ type Notary = {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const res = await fetch(
-  //   'https://api.filplus.d.interplanetary.one/api/getVerifiers?limit=10&page=1'
-  //   // 'https://api.filplus.d.interplanetary.one/api/getVerifiers'
-  // );
-  // const notaries = await res.json();
+  const humanizeDate = (seconds: any) =>
+    moment.duration(seconds, 'seconds').humanize();
+  const fetchFromApi = await fetch(
+    // 'https://api.filplus.d.interplanetary.one/public/api/getVerifiers?limit=100&page=1'
+    'https://api.filplus.d.interplanetary.one/public/api/getVerifiers',
+    {
+      headers: {
+        'x-api-key': `299416a2-ebcb-46ba-8675-6a9a115d7ec0`,
+      },
+    }
+  );
+  const fetchFromApiRes = await fetchFromApi.json();
 
-  const notariesMock = getVerifiersMock;
-  const notaries = _.orderBy(
-    notariesMock.data,
+  // const notariesMock = getVerifiersMock;
+  // const notariesData = notariesMock;
+  const notariesData = fetchFromApiRes.data;
+
+  let notaries = _.orderBy(
+    notariesData,
     ['verifiedClientsCount', 'initialAllowance'],
     ['desc', 'desc']
   );
-  // console.log('notariesSorted ->', notariesSorted);
 
-  // console.log(notaries);
+  const getAverageTtd = (secondsToDatacapList: any) => {
+    if (_.isEmpty(secondsToDatacapList)) {
+      // return null;
+      // return {averageTtdInSeconds: 0, averageTtdInDuration: 0};
+      return { averageTtdInSeconds: null, averageTtdInDuration: null };
+    }
+
+    const sumInSeconds = secondsToDatacapList.reduce(
+      (previous: any, current: any) => previous + current
+    );
+    // console.log('sumInSeconds ->', sumInSeconds);
+
+    const averageTtdInSeconds = Number(
+      sumInSeconds / secondsToDatacapList.length
+    ).toFixed();
+    const averageTtdInDuration = humanizeDate(averageTtdInSeconds);
+
+    const datesHumanized = secondsToDatacapList.map((v: any) =>
+      humanizeDate(v)
+    );
+    // console.log('datesHumanized ->', datesHumanized);
+
+    // console.log('averageTtdInDuration ->', averageTtdInDuration);
+    // console.log('averageTtdInSeconds ->', averageTtdInSeconds);
+
+    return {
+      averageTtdInSeconds,
+      averageTtdInDuration,
+    };
+  };
+
+  const getNotariesWithMoreInfo = async (addressId: any) => {
+    const res = await fetch(
+      `https://api.filplus.d.interplanetary.one/public/api/getVerifiedClients/${addressId}`,
+      {
+        headers: {
+          'x-api-key': `299416a2-ebcb-46ba-8675-6a9a115d7ec0`,
+        },
+      }
+    );
+    return res.json();
+  };
+
+  // const newNotariesArray: any = [];
+
+  const newNotariesArray = notaries.map(async (notary) => {
+    const { addressId } = notary;
+    const newInfo = await getNotariesWithMoreInfo(addressId);
+    // console.log(newInfo);
+
+    const secondsToDatacapForEveryClient = newInfo.data
+      ?.filter(
+        (v: any) => !!v.createMessageTimestamp && !!v.issueCreateTimestamp
+      )
+      .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
+      .map((v: any) => {
+        return v.createMessageTimestamp - v.issueCreateTimestamp;
+      });
+    // console.log(
+    //   'secondsToDatacapForEveryClient ->',
+    //   secondsToDatacapForEveryClient
+    // );
+
+    const ttdAverages = getAverageTtd(secondsToDatacapForEveryClient);
+    // console.log('ttdAverages ->', ttdAverages);
+
+    return {
+      ...notary,
+      ttdAverages,
+    };
+
+    // console.log('getVerifierTtd ->', getVerifierTtd);
+    // return ({ ...notary, averageTtd: 1 });
+  });
+
+  // newNotaries;
+  // console.log(newNotaries);
+  // console.log('newNotariesArray ->', await Promise.all(newNotariesArray));
+
+  notaries = await Promise.all(newNotariesArray);
+  // console.log('notariesNew ->', notariesNew);
+
+  // console.log(await getNotariesWithMoreInfo());
 
   return {
     props: {
