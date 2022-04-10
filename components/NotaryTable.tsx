@@ -61,7 +61,7 @@ export const NotaryTable = (props: any) => {
       key: 'addressId',
       title: 'Address ID',
       dataIndex: 'addressId',
-      sorter: true,
+      // sorter: true,
     },
     {
       key: 'clients',
@@ -126,6 +126,7 @@ export const NotaryTable = (props: any) => {
   const data: Notary[] = props.props.notaries
     .filter((v: any) => !!v.name)
     .filter((v: any) => v.name != 'n/a')
+    .filter((v: any) => !/Testing[^a-zA-Z]*Deleted/i.test(v.name))
     .map((notary: any, index: any) => {
       const notaryName = notary.name.match(/(^[^\(]+)/i);
       const orgName = notary.name.match(/\(([^\(\)]+)\)/i);

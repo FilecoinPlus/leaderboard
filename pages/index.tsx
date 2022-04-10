@@ -4,6 +4,7 @@ import { Layout, Row, Typography, Divider, Input, Select } from 'antd';
 import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
 import moment from 'moment';
+import { loadVerifiers } from '../lib/fetch-verifiers';
 
 import {
   CustomLayoutHeader,
@@ -27,23 +28,13 @@ type Notary = {
   auditTrail: string;
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const humanizeDate = (seconds: any) =>
+const humanizeDate = (seconds: any) =>
     moment.duration(seconds, 'seconds').humanize();
-  const fetchFromApi = await fetch(
-    // 'https://api.filplus.d.interplanetary.one/public/api/getVerifiers?limit=100&page=1'
-    'https://api.filplus.d.interplanetary.one/public/api/getVerifiers',
-    {
-      headers: {
-        'x-api-key': `299416a2-ebcb-46ba-8675-6a9a115d7ec0`,
-      },
-    }
-  );
-  const fetchFromApiRes = await fetchFromApi.json();
 
-  // const notariesMock = getVerifiersMock;
-  // const notariesData = notariesMock;
-  const notariesData = fetchFromApiRes.data;
+export const getStaticProps: GetStaticProps = async () => {
+  const verifiers = await loadVerifiers();
+  // const notariesData = getVerifiersMock;
+  const notariesData = verifiers.data;
 
   let notaries = _.orderBy(
     notariesData,
