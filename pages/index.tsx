@@ -5,6 +5,7 @@ import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
 import moment from 'moment';
 import { loadVerifiers } from '../lib/fetch-verifiers';
+import { loadVerifiersMoreInfo } from '../lib/fetch-verifiers-more-info';
 
 import {
   CustomLayoutHeader,
@@ -32,9 +33,9 @@ const humanizeDate = (seconds: any) =>
     moment.duration(seconds, 'seconds').humanize();
 
 export const getStaticProps: GetStaticProps = async () => {
-  const verifiers = await loadVerifiers();
-  // const notariesData = getVerifiersMock;
-  const notariesData = verifiers.data;
+  // const verifiers = await loadVerifiers();
+  // const notariesData = verifiers.data;
+  const notariesData = getVerifiersMock.data;
 
   let notaries = _.orderBy(
     notariesData,
@@ -44,15 +45,12 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const getAverageTtd = (secondsToDatacapList: any) => {
     if (_.isEmpty(secondsToDatacapList)) {
-      // return null;
-      // return {averageTtdInSeconds: 0, averageTtdInDuration: 0};
       return { averageTtdInSeconds: null, averageTtdInDuration: null };
     }
 
     const sumInSeconds = secondsToDatacapList.reduce(
       (previous: any, current: any) => previous + current
     );
-    // console.log('sumInSeconds ->', sumInSeconds);
 
     const averageTtdInSeconds = Number(
       sumInSeconds / secondsToDatacapList.length
@@ -62,10 +60,6 @@ export const getStaticProps: GetStaticProps = async () => {
     const datesHumanized = secondsToDatacapList.map((v: any) =>
       humanizeDate(v)
     );
-    // console.log('datesHumanized ->', datesHumanized);
-
-    // console.log('averageTtdInDuration ->', averageTtdInDuration);
-    // console.log('averageTtdInSeconds ->', averageTtdInSeconds);
 
     return {
       averageTtdInSeconds,
@@ -73,24 +67,8 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   };
 
-  const getNotariesWithMoreInfo = async (addressId: any) => {
-    const res = await fetch(
-      `https://api.filplus.d.interplanetary.one/public/api/getVerifiedClients/${addressId}`,
-      {
-        headers: {
-          'x-api-key': `299416a2-ebcb-46ba-8675-6a9a115d7ec0`,
-        },
-      }
-    );
-    return res.json();
-  };
-
-  // const newNotariesArray: any = [];
-
   const newNotariesArray = notaries.map(async (notary) => {
-    const { addressId } = notary;
-    const newInfo = await getNotariesWithMoreInfo(addressId);
-    // console.log(newInfo);
+    const newInfo = await loadVerifiersMoreInfo(notary.addressId);
 
     const secondsToDatacapForEveryClient = newInfo.data
       ?.filter(
@@ -100,10 +78,6 @@ export const getStaticProps: GetStaticProps = async () => {
       .map((v: any) => {
         return v.createMessageTimestamp - v.issueCreateTimestamp;
       });
-    // console.log(
-    //   'secondsToDatacapForEveryClient ->',
-    //   secondsToDatacapForEveryClient
-    // );
 
     const ttdAverages = getAverageTtd(secondsToDatacapForEveryClient);
     // console.log('ttdAverages ->', ttdAverages);
@@ -113,18 +87,9 @@ export const getStaticProps: GetStaticProps = async () => {
       ttdAverages,
     };
 
-    // console.log('getVerifierTtd ->', getVerifierTtd);
-    // return ({ ...notary, averageTtd: 1 });
   });
 
-  // newNotaries;
-  // console.log(newNotaries);
-  // console.log('newNotariesArray ->', await Promise.all(newNotariesArray));
-
   notaries = await Promise.all(newNotariesArray);
-  // console.log('notariesNew ->', notariesNew);
-
-  // console.log(await getNotariesWithMoreInfo());
 
   return {
     props: {
@@ -148,7 +113,6 @@ const App: NextPage = (
 
       <Layout className='layout'>
         <CustomLayoutHeader />
-        {/* <Sider>Sider</Sider> */}
 
         <Content style={{ padding: '50px 50px' }}>
           <Title style={{ textAlign: 'center' }}>Notaries</Title>

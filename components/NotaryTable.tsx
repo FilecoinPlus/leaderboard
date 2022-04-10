@@ -134,6 +134,7 @@ export const NotaryTable = (props: any) => {
         key: index,
         name: notaryName && notaryName[0],
         organization: orgName && orgName[1],
+        location: '–',
         addressId: notary.addressId,
         url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
         clients: notary.verifiedClientsCount,
@@ -154,7 +155,7 @@ export const NotaryTable = (props: any) => {
         ),
         datacapTotalRaw:
           Number(notary.initialAllowance) + Number(notary.allowance),
-        averageTtd: notary.ttdAverages.averageTtdInDuration || '',
+        averageTtd: notary.ttdAverages.averageTtdInDuration || '–',
         averageTtdRaw: notary.ttdAverages.averageTtdInSeconds || 999999999,
       };
     });
