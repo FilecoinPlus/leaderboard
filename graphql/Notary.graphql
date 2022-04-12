@@ -1,0 +1,49 @@
+type Notary {
+  id: ID!
+  name: String!
+  organization: String!
+  location: [Location!]!
+	address: String!
+	addressId: String!
+
+  # GitHub
+  githubHandle: String!
+  githubProfilePicture: String!
+  githubDiscussionsCreated: Int!
+  githubDiscussionsParticipated: Int!
+
+  # General
+  averageTtd: Int!
+  totalApprovals: Int!
+  timeToFirstResponseForDueDiligence: Int!
+  allocatedInPastFourWeeks: Int!
+  totalClientsAllocatedDirectly: Int!
+  totalDatacap: Int!
+  totalDatacapAvailable: Int!
+  totalDatacapUsed: Int!
+  totalDatacapUsedInDeals: Int!
+  averageCommentsOnGithubBeforeAllocation: Int!
+
+  # LDN
+  ldnSignatures: Int!
+  ldnAverageTtd: Int!
+  ldnTotalSignatures: Int!
+  ldnTotalSignaturesUniqueClients: Int!
+  ldnAllocatedInPastFourWeeks: Int!
+  ldnTotalDatacapUsed: Int!
+  ldnAverageCommentsOnGithubApplications: Int!
+
+  # Governance
+  governanceCallsAttended: Int!
+}
+
+# Taken from https://github.com/keyko-io/filecoin-verifier-frontend/blob/cfdd7f907e7e85d73c5692e36338748d38be5603/src/config.ts#L86
+enum Location {
+	AFRICA
+	ASIA_NOT_GREATER_CHINA
+	EUROPE
+	GREATER_CHINA
+	NORTH_AMERICA
+	OCEANIA
+	SOUTH_AMERICA
+}
