@@ -6,6 +6,8 @@ import _ from 'lodash';
 import moment from 'moment';
 import { loadVerifiers } from '../lib/fetch-verifiers';
 import { loadVerifiersMoreInfo } from '../lib/fetch-verifiers-more-info';
+import { getAddressKeyById } from '../lib/getAddressKeyById';
+import { getAddressIdByKey } from '../lib/getAddressIdByKey';
 
 import {
   CustomLayoutHeader,
@@ -30,7 +32,7 @@ type Notary = {
 };
 
 const humanizeDate = (seconds: any) =>
-    moment.duration(seconds, 'seconds').humanize();
+  moment.duration(seconds, 'seconds').humanize();
 
 export const getStaticProps: GetStaticProps = async () => {
   // const verifiers = await loadVerifiers();
@@ -82,11 +84,19 @@ export const getStaticProps: GetStaticProps = async () => {
     const ttdAverages = getAverageTtd(secondsToDatacapForEveryClient);
     // console.log('ttdAverages ->', ttdAverages);
 
+    const addressId =
+      notary.addressId ||
+      (notary.address && (await getAddressIdByKey(notary.address)));
+    const addressKey =
+      notary.address ||
+      (notary.addressId && (await getAddressKeyById(notary.addressId)));
+
     return {
       ...notary,
+      addressId,
+      address: addressKey,
       ttdAverages,
     };
-
   });
 
   notaries = await Promise.all(newNotariesArray);

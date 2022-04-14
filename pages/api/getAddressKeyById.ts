@@ -7,7 +7,7 @@ export default async function getAddressKeyById(
   // const addressKey = 'f0107408';
   const addressId = req.query?.verifierAddressId;
   //  && /^[a-zA-Z0-9]+$/.test(req.query.verifierAddressId.toString());
-  console.log(addressId);
+  // console.log(addressId);
 
   const requestBody = {
     jsonrpc: '2.0',

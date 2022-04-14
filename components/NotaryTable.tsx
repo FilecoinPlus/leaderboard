@@ -64,6 +64,13 @@ export const NotaryTable = (props: any) => {
       // sorter: true,
     },
     {
+      key: 'addressKey',
+      title: 'Address Key',
+      dataIndex: 'addressKey',
+      ellipsis: true,
+      // sorter: true,
+    },
+    {
       key: 'clients',
       title: 'Clients',
       dataIndex: 'clients',
@@ -136,6 +143,7 @@ export const NotaryTable = (props: any) => {
         organization: orgName && orgName[1],
         location: '–',
         addressId: notary.addressId,
+        addressKey: notary.address || '–',
         url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
         clients: notary.verifiedClientsCount,
         datacapAvailable: prettyBytes(Number(notary.allowance), {
