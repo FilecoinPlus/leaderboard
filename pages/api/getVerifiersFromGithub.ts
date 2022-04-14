@@ -10,6 +10,9 @@ export default async function getVerifiersFromGithub(
     // 'https://github.com/filecoin-project/notary-governance/blob/main/notaries/README.md';
     'https://api.github.com/repos/filecoin-project/notary-governance/readme/notaries';
 
+
+  console.log('process.env.GITHUB_API_TOKEN ->', process.env.GITHUB_API_TOKEN);
+
   const response = await fetch(`${apiEndpoint}`, {
     headers: {
       Authorization: `token ${process.env.GITHUB_API_TOKEN}`,

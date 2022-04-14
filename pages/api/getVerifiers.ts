@@ -1,13 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as cheerio from 'cheerio';
 import markdownIt from 'markdown-it';
+import { addHttpsIfNotLocal } from '../../utils/general';
 
 export default async function getVerifiers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const VERIFIER_LIST_ENDPOINT =
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getVerifiersFromGithub`;
+  const VERIFIER_LIST_ENDPOINT = `${addHttpsIfNotLocal(
+    process.env.NEXT_PUBLIC_VERCEL_URL
+  )}/api/getVerifiersFromGithub`;
+
+  console.log('process.env.IS_LOCAL ->', process.env.IS_LOCAL);
+  console.log(
+    'process.env.NEXT_PUBLIC_VERCEL_URL ->',
+    process.env.NEXT_PUBLIC_VERCEL_URL
+  );
+  console.log('VERIFIER_LIST_ENDPOINT ->', VERIFIER_LIST_ENDPOINT);
 
   const verifierList = await fetch(`${VERIFIER_LIST_ENDPOINT}`);
   const verifierListData = await verifierList.json();
