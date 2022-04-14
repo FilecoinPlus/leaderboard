@@ -1,6 +1,6 @@
 export const addHttpsIfNotLocal = (url: any) => {
-  if (process.env.IS_LOCAL && !process.env.IS_LOCAL) {
-    return 'https://' + url;
+  if (process.env.IS_LOCAL) {
+    return;
   }
-  return url;
+  return 'https://' + url;
 };
