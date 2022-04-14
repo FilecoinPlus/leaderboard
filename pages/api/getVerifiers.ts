@@ -7,7 +7,7 @@ export default async function getVerifiers(
   res: NextApiResponse
 ) {
   const VERIFIER_LIST_ENDPOINT =
-    'http://localhost:3000/api/getVerifiersFromGithub';
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getVerifiersFromGithub`;
 
   const verifierList = await fetch(`${VERIFIER_LIST_ENDPOINT}`);
   const verifierListData = await verifierList.json();

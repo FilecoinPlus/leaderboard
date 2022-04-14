@@ -1,9 +1,9 @@
 export async function mergeVerifiersFromMultipleSources() {
   const API_ENDPOINTS = {
-    OUR_OWN: 'http://localhost:3000/api/getVerifiers',
-    KEYKO: 'http://localhost:3000/api/getVerifiersFromKeyko',
+    OUR_OWN: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getVerifiers`,
+    KEYKO: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getVerifiersFromKeyko`,
     INTERPLANETARY_ONE:
-      'http://localhost:3000/api/getVerifiersFromInterplanetaryOne',
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getVerifiersFromInterplanetaryOne`,
   };
 
   const keykoRes = await fetch(API_ENDPOINTS.KEYKO);
