@@ -11,13 +11,6 @@ export default async function getVerifiers(
     process.env.NEXT_PUBLIC_VERCEL_URL
   )}/api/getVerifiersFromGithub`;
 
-  console.log('process.env.IS_LOCAL ->', process.env.IS_LOCAL);
-  console.log(
-    'process.env.NEXT_PUBLIC_VERCEL_URL ->',
-    process.env.NEXT_PUBLIC_VERCEL_URL
-  );
-  console.log('VERIFIER_LIST_ENDPOINT ->', VERIFIER_LIST_ENDPOINT);
-
   const verifierList = await fetch(`${VERIFIER_LIST_ENDPOINT}`);
   const verifierListData = await verifierList.json();
 
