@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { gql, ApolloServer } from 'apollo-server-micro';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginSchemaReporting,
+  ApolloServerPluginUsageReporting,
+} from 'apollo-server-core';
 import neo4j from 'neo4j-driver';
 import { Neo4jGraphQL } from '@neo4j/graphql';
 import Cors from 'cors';
@@ -71,7 +75,17 @@ const schema = await neoSchema.getSchema();
 apolloServer = new ApolloServer({
   schema,
   introspection: true,
-  plugins: [ApolloServerPluginLandingPageLocalDefault()],
+  plugins: [
+    ApolloServerPluginLandingPageLocalDefault({
+      footer: false,
+    }),
+    ApolloServerPluginSchemaReporting(),
+    ApolloServerPluginUsageReporting({
+      sendVariableValues: { all: true },
+      sendHeaders: { all: true },
+      sendReportsImmediately: true,
+    }),
+  ],
 });
 
 await apolloServer.start();
@@ -82,7 +96,8 @@ const createHandler = apolloServer.createHandler({
 // Initialize the cors middleware
 const cors = Cors({
   // Only allow requests with GET, POST and OPTIONS
-  methods: ['GET', 'POST', 'OPTIONS'],
+  // methods: ['GET', 'POST', 'OPTIONS'],
+  // credentials: true,
 });
 
 export const config = {
