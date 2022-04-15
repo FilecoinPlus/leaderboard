@@ -97,7 +97,8 @@ const createHandler = apolloServer.createHandler({
 const cors = Cors({
   // Only allow requests with GET, POST and OPTIONS
   // methods: ['GET', 'POST', 'OPTIONS'],
-  // credentials: true,
+  origin: [/http.*$/],
+  credentials: true,
 });
 
 export const config = {
