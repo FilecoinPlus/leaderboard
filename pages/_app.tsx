@@ -1,9 +1,30 @@
 // import 'antd/dist/antd.css';
 // import '../styles/variables.less';
-import type {AppProps} from 'next/app';
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+} from '@apollo/client';
+import type { AppProps } from 'next/app';
 
-function MyApp({Component, pageProps}: AppProps) {
-  return <Component {...pageProps} />;
+function createApolloClient() {
+  const link = new HttpLink({
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+  });
+
+  return new ApolloClient({
+    link,
+    cache: new InMemoryCache(),
+  });
+}
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <ApolloProvider client={createApolloClient()}>
+      <Component {...pageProps} />
+    </ApolloProvider>
+  );
 }
 
 export default MyApp;

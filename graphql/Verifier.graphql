@@ -1,4 +1,4 @@
-type Notary {
+type Verifier {
   id: ID!
   name: String!
   organization: String!
