@@ -15,7 +15,9 @@ let apolloServer: any;
 
 const typeDefs = gql`
   type Verifier {
-    id: ID!
+    id: ID! @id
+    createdAt: DateTime! @timestamp(operations: [CREATE])
+    updatedAt: DateTime! @timestamp(operations: [UPDATE])
     name: String
     organization: String
     location: String
