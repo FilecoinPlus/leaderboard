@@ -16,6 +16,8 @@ function createApolloClient() {
   return new ApolloClient({
     link,
     cache: new InMemoryCache(),
+    connectToDevTools: true,
+    // ssrMode: true,
   });
 }
 

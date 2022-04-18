@@ -8,37 +8,13 @@ import {
 import neo4j from 'neo4j-driver';
 import { Neo4jGraphQL } from '@neo4j/graphql';
 import Cors from 'cors';
+import { typeDefs } from '../../graphql/typeDefs';
+import { InterPlanetaryOneAPI } from '../../graphql/datasources/interplanetaryOne';
+import { resolvers } from '../../graphql/resolvers';
 
 // Declare here to handle cold start of serverless function
 let startServer: any;
 let apolloServer: any;
-
-const typeDefs = gql`
-  type Verifier {
-    id: ID! @id
-    createdAt: DateTime! @timestamp(operations: [CREATE])
-    updatedAt: DateTime! @timestamp(operations: [UPDATE])
-    name: String
-    organization: String
-    location: String
-    addressKey: String
-    addressId: String
-    averageTtd: Int
-    totalApprovals: Int
-    githubUsername: String
-    githubAvatarUrl: String
-    startedAt: String
-    hasDatacap: DataCap @relationship(type: "HAS", direction: OUT)
-  }
-
-  type DataCap {
-    total: Int
-    available: Int
-    allocated: Int
-    usedInDeals: Int
-    verifierHas: Verifier @relationship(type: "HAS", direction: IN)
-  }
-`;
 
 const driver = neo4j.driver(
   // @ts-ignore
@@ -68,15 +44,17 @@ function runMiddleware(
   });
 }
 
-// Uncomment to create any indexes or constraints defined in GraphQL type definitions
-//await neoSchema.assertIndexesAndConstraints({ options: { create: true } });
-
 // cold start, need to create ApolloServer
-const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
+const neoSchema = new Neo4jGraphQL({ typeDefs, resolvers, driver });
+// Uncomment to create any indexes or constraints defined in GraphQL type definitions
 const schema = await neoSchema.getSchema();
+await neoSchema.assertIndexesAndConstraints({ options: { create: true } });
 apolloServer = new ApolloServer({
   schema,
   introspection: true,
+  dataSources: () => ({
+    interplanetaryOneAPI: new InterPlanetaryOneAPI(),
+  }),
   plugins: [
     ApolloServerPluginLandingPageLocalDefault({
       footer: false,

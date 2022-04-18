@@ -77,7 +77,9 @@ export const getStaticProps: GetStaticProps = async () => {
         (v: any) => !!v.createMessageTimestamp && !!v.issueCreateTimestamp
       )
       .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
+      .filter((v: any) => v.addressId != notary.addressId)
       .map((v: any) => {
+        // console.log(`notary.addressId: ${notary.addressId} | v.addressId: ${v.addressId} | different: ${v.addressId != notary.addressId}`);
         return v.createMessageTimestamp - v.issueCreateTimestamp;
       });
 
