@@ -7,8 +7,8 @@ const withAntdLess = require('next-plugin-antd-less');
 
 module.exports = withAntdLess({
   ...nextConfig,
-  // modifyVars: { '@primary-color': '#04f' },
   lessVarsFilePath: './styles/variables.less',
+  // modifyVars: { '@primary-color': '#04f' },
   // lessVarsFilePathAppendToEndOfContent: true,
   // cssLoaderOptions: {},
 
