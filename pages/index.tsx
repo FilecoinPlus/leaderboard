@@ -3,15 +3,16 @@ import Head from 'next/head';
 import { Layout, Row, Typography, Divider, Input, Select } from 'antd';
 import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
-import moment from 'moment';
 import { loadVerifiers } from '../lib/fetch-verifiers';
 import { loadVerifiersMoreInfo } from '../lib/fetch-verifiers-more-info';
-import { getAddressKeyById } from '../lib/getAddressKeyById';
-import { getAddressIdByKey } from '../lib/getAddressIdByKey';
+import { getAddressKeyFromId } from '../lib/getAddressKeyFromId';
+import { getAddressIdFromKey } from '../lib/getAddressIdFromKey';
+import { formatData } from '../utils/formats';
+import { getAverageTtd } from '../utils/general';
 
 import {
-  CustomLayoutHeader,
-  CustomLayoutFooter,
+  LayoutHeader,
+  LayoutFooter,
   NotaryCard,
   NotaryTable,
 } from '../components';
@@ -19,20 +20,6 @@ import {
 const { Content } = Layout;
 const { Title } = Typography;
 const { Option } = Select;
-
-type Notary = {
-  name: string;
-  organization: string;
-  address: string;
-  addressId: string;
-  verifiedClientsCount: number;
-  allowance: number;
-  initialAllowance: number;
-  auditTrail: string;
-};
-
-const humanizeDate = (seconds: any) =>
-  moment.duration(seconds, 'seconds').humanize();
 
 export const getStaticProps: GetStaticProps = async () => {
   // const verifiers = await loadVerifiers();
@@ -45,30 +32,6 @@ export const getStaticProps: GetStaticProps = async () => {
     ['desc', 'desc']
   );
 
-  const getAverageTtd = (secondsToDatacapList: any) => {
-    if (_.isEmpty(secondsToDatacapList)) {
-      return { averageTtdInSeconds: null, averageTtdInDuration: null };
-    }
-
-    const sumInSeconds = secondsToDatacapList.reduce(
-      (previous: any, current: any) => previous + current
-    );
-
-    const averageTtdInSeconds = Number(
-      sumInSeconds / secondsToDatacapList.length
-    ).toFixed();
-    const averageTtdInDuration = humanizeDate(averageTtdInSeconds);
-
-    const datesHumanized = secondsToDatacapList.map((v: any) =>
-      humanizeDate(v)
-    );
-
-    return {
-      averageTtdInSeconds,
-      averageTtdInDuration,
-    };
-  };
-
   const newNotariesArray = notaries.map(async (notary) => {
     const newInfo = await loadVerifiersMoreInfo(notary.addressId);
 
@@ -79,19 +42,17 @@ export const getStaticProps: GetStaticProps = async () => {
       .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
       .filter((v: any) => v.addressId != notary.addressId)
       .map((v: any) => {
-        // console.log(`notary.addressId: ${notary.addressId} | v.addressId: ${v.addressId} | different: ${v.addressId != notary.addressId}`);
         return v.createMessageTimestamp - v.issueCreateTimestamp;
       });
 
     const ttdAverages = getAverageTtd(secondsToDatacapForEveryClient);
-    // console.log('ttdAverages ->', ttdAverages);
 
     const addressId =
       notary.addressId ||
-      (notary.address && (await getAddressIdByKey(notary.address)));
+      (notary.address && (await getAddressIdFromKey(notary.address)));
     const addressKey =
       notary.address ||
-      (notary.addressId && (await getAddressKeyById(notary.addressId)));
+      (notary.addressId && (await getAddressKeyFromId(notary.addressId)));
 
     return {
       ...notary,
@@ -124,7 +85,7 @@ const App: NextPage = (
       </Head>
 
       <Layout className='layout'>
-        <CustomLayoutHeader />
+        <LayoutHeader />
 
         <Content style={{ padding: '50px 50px' }}>
           <Title style={{ textAlign: 'center' }}>Notaries</Title>
@@ -137,7 +98,7 @@ const App: NextPage = (
             }}
           />
 
-          <NotaryTable props={pageProps} />
+          <NotaryTable props={formatData(pageProps)} />
 
           {/* Notary Cards */}
           {/* <Row
@@ -172,7 +133,7 @@ const App: NextPage = (
           </Row> */}
         </Content>
 
-        <CustomLayoutFooter />
+        <LayoutFooter />
       </Layout>
     </div>
   );

@@ -2,9 +2,9 @@ import { Layout, Image } from 'antd';
 
 const { Header } = Layout;
 
-export const CustomLayoutHeader = () => {
+export const LayoutHeader = () => {
   return (
-    <Header className='header CustomLayoutHeader'>
+    <Header className='header LayoutHeader'>
       <Image
         className='logo'
         // width={34}

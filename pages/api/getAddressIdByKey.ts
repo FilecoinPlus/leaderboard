@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-export default async function getAddressIdByKey(
+export default async function getAddressIdFromKey(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

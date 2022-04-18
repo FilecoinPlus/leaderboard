@@ -2,9 +2,9 @@ import { Layout, Divider, Space } from 'antd';
 
 const { Footer } = Layout;
 
-export const CustomLayoutFooter = () => {
+export const LayoutFooter = () => {
   return (
-    <div className='CustomLayoutFooter'>
+    <div className='LayoutFooter'>
       <Space direction='vertical' style={{ display: 'flex', flexGrow: 1 }}>
         <div></div>
       </Space>

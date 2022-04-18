@@ -1,5 +1,5 @@
-export * from './CustomLayoutHeader';
-export * from './CustomLayoutFooter';
+export * from './LayoutHeader';
+export * from './LayoutFooter';
 export * from './DatacapStatsCard';
 export * from './GeneralStatsCard';
 export * from './NotaryCard';
