@@ -75,6 +75,7 @@ export const NotaryTable = (props: any) => {
       title: 'Clients',
       dataIndex: 'clients',
       // width: 120,
+      align: 'right',
       responsive: ['md'],
       sorter: (a, b) => a.clients - b.clients,
     },
