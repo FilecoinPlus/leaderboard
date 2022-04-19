@@ -1,6 +1,17 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { Layout, Row, Typography, Divider, Input, Select } from 'antd';
+import {
+  Layout,
+  Row,
+  Typography,
+  Divider,
+  Input,
+  Select,
+  Statistic,
+  Card,
+  Col,
+  Space,
+} from 'antd';
 import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
 import { loadVerifiers } from '../lib/fetch-verifiers';
@@ -9,6 +20,7 @@ import { getAddressKeyFromId } from '../lib/getAddressKeyFromId';
 import { getAddressIdFromKey } from '../lib/getAddressIdFromKey';
 import { formatData } from '../utils/formats';
 import { getAverageTtd } from '../utils/general';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 import {
   LayoutHeader,
@@ -87,8 +99,37 @@ const App: NextPage = (
       <Layout className='layout'>
         <LayoutHeader />
 
-        <Content style={{ padding: '50px 50px' }}>
-          <Title style={{ textAlign: 'center' }}>Notaries</Title>
+        <Content style={{ padding: '45px 45px' }}>
+          <Row gutter={16}>
+            <Col span={4} xs={6} md={5} sm={4}>
+              <Card>
+                <Statistic
+                  title='Time To DataCap (MoM, avg.)'
+                  value={11.28}
+                  precision={2}
+                  valueStyle={{ color: '#3f8600' }}
+                  prefix={<ArrowDownOutlined />}
+                  suffix='%'
+                />
+              </Card>
+            </Col>
+            <Col span={4} xs={6} md={5} sm={4}>
+              <Card>
+                <Statistic
+                  title='DataCap Used In Deals (QoQ)'
+                  value={9.3}
+                  precision={2}
+                  valueStyle={{ color: '#cf1322' }}
+                  prefix={<ArrowDownOutlined />}
+                  suffix='%'
+                />
+              </Card>
+            </Col>
+          </Row>
+
+          <Space><div style={{margin: '20px'}}></div></Space>
+
+          <Title>All notaries</Title>
           <Divider
             style={{
               background: 'linear-gradient(145deg,#c65aff,#248dff)',

@@ -3,18 +3,20 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 };
+// const aliyunTheme = require('@ant-design/aliyun-theme');
 const withAntdLess = require('next-plugin-antd-less');
 
 module.exports = withAntdLess({
   ...nextConfig,
   lessVarsFilePath: './styles/variables.less',
-  // modifyVars: { '@primary-color': '#04f' },
   // lessVarsFilePathAppendToEndOfContent: true,
   // cssLoaderOptions: {},
+  // modifyVars: aliyunTheme,
 
-  webpack(config) {
+  webpack(config, options) {
     config.experiments = config.experiments || {};
     config.experiments.topLevelAwait = true;
+
     return config;
   },
 });

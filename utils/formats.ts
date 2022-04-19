@@ -11,7 +11,7 @@ export const formatData = (props: any) => props.notaries
     key: index,
     name: notaryName && notaryName[0],
     organization: orgName && orgName[1],
-    location: '–',
+    location: ['–'],
     addressId: notary.addressId,
     addressKey: notary.address || '–',
     url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,

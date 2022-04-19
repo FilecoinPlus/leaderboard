@@ -1,5 +1,5 @@
 // import 'antd/dist/antd.css';
-// import '../styles/variables.less';
+import '../styles/variables.less';
 import {
   ApolloProvider,
   ApolloClient,
