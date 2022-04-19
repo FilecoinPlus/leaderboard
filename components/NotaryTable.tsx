@@ -109,6 +109,7 @@ export const NotaryTable = (props: any) => {
 
   return (
     <Table
+      // title={() => 'All notaries'}
       columns={columns}
       dataSource={props.props}
       // size='middle'
