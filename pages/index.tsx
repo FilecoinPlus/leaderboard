@@ -100,35 +100,7 @@ const App: NextPage = (
         <LayoutHeader />
 
         <Content style={{ padding: '45px 45px' }}>
-          <Row gutter={16}>
-            <Col span={4} xs={6} md={5} sm={4}>
-              <Card>
-                <Statistic
-                  title='Time To DataCap (MoM, avg.)'
-                  value={11.28}
-                  precision={2}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<ArrowDownOutlined />}
-                  suffix='%'
-                />
-              </Card>
-            </Col>
-            <Col span={4} xs={6} md={5} sm={4}>
-              <Card>
-                <Statistic
-                  title='DataCap Used In Deals (QoQ)'
-                  value={9.3}
-                  precision={2}
-                  valueStyle={{ color: '#cf1322' }}
-                  prefix={<ArrowDownOutlined />}
-                  suffix='%'
-                />
-              </Card>
-            </Col>
-          </Row>
-
-          <Space><div style={{margin: '20px'}}></div></Space>
-
+          {/* <Space><div style={{margin: '20px'}}></div></Space> */}
           <Title>All notaries</Title>
           <Divider
             style={{
