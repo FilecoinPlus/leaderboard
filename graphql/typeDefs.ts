@@ -6,8 +6,8 @@ export const typeDefs = gql`
     name: String
     organization: String
     location: [Location]
-    addressKey: String
-    addressId: String
+    addressKey: String @unique
+    addressId: String @unique
     totalApprovals: Int
     githubUsername: String
     githubAvatarUrl: String
@@ -18,8 +18,8 @@ export const typeDefs = gql`
     updatedAt: DateTime @timestamp(operations: [UPDATE])
     hasDatacap: DataCap @relationship(type: "HAS", direction: OUT)
     hasStats: Stats @relationship(type: "HAS", direction: OUT)
-    hasClients: Clients @relationship(type: "HAS", direction: OUT)
-    fromSource: Source @relationship(type: "FROM", direction: OUT)
+    hasClient: Client @relationship(type: "HAS", direction: OUT)
+    fromDatasource: DataSource @relationship(type: "FROM", direction: OUT)
   }
 
   type DataCap {
@@ -35,12 +35,12 @@ export const typeDefs = gql`
     verifierHas: Verifier @relationship(type: "HAS", direction: IN)
   }
 
-  type Clients {
+  type Client {
     id: ID
     verifierHas: Verifier @relationship(type: "HAS", direction: IN)
   }
 
-  type Source {
+  type DataSource {
     id: ID
     name: String
     url: String

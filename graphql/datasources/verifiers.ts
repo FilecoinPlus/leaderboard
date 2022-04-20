@@ -4,7 +4,7 @@ const FILECOIN_GENESIS_UNIX_EPOCH = 1598306400;
 const convertHeightToUnix = (filEpoch: number) =>
   filEpoch * 30 + FILECOIN_GENESIS_UNIX_EPOCH;
 
-class InterPlanetaryOneAPI extends RESTDataSource {
+class VerifiersAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = 'https://api.filplus.d.interplanetary.one/public/api/';
@@ -48,8 +48,7 @@ class InterPlanetaryOneAPI extends RESTDataSource {
 
   async getVerifierById({ verifierId }: any) {
     const response = await this.get('getVerifiers', { filter: verifierId });
-    const responseData = response.data;
-    return this.verifierReducer(responseData[0]);
+    return this.verifierReducer(response[0]);
   }
 
   getVerifiersByIds({ verifierIds }: any) {
@@ -59,4 +58,4 @@ class InterPlanetaryOneAPI extends RESTDataSource {
   }
 }
 
-export { InterPlanetaryOneAPI };
+export { VerifiersAPI };

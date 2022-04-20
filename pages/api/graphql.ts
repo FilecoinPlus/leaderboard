@@ -11,6 +11,7 @@ import Cors from 'cors';
 import { typeDefs } from '../../graphql/typeDefs';
 import { InterPlanetaryOneAPI } from '../../graphql/datasources/interplanetaryOne';
 import { resolvers } from '../../graphql/resolvers';
+import { VerifiersAPI } from '../../graphql/datasources/verifiers';
 
 // Declare here to handle cold start of serverless function
 let startServer: any;
@@ -54,6 +55,7 @@ apolloServer = new ApolloServer({
   introspection: true,
   dataSources: () => ({
     interplanetaryOneAPI: new InterPlanetaryOneAPI(),
+    verifiersAPI: new VerifiersAPI(),
   }),
   plugins: [
     ApolloServerPluginLandingPageLocalDefault({
