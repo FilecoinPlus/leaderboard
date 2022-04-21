@@ -24,7 +24,7 @@ export const NotaryTable = (props: any) => {
       dataIndex: 'name',
       // width: 220,
       sorter: true,
-      fixed: 'left',
+      // fixed: 'left',
       render: (value, record, index) => {
         return (
           <Link href={record.url} style={{ color: 'inherit' }}>
