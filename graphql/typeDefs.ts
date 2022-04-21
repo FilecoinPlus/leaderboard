@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
+
   type Verifier {
     id: ID @id
     name: String
@@ -49,6 +50,7 @@ export const typeDefs = gql`
 
   type Query {
     verifiersFromInterPlanetaryOne: [Verifier]
+    # getVerifiers {}
   }
 
   enum Location {
