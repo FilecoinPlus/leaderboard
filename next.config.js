@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // images: {
+  //   formats: ['image/avif', 'image/webp'],
+  // }
 };
 // const aliyunTheme = require('@ant-design/aliyun-theme');
 const withAntdLess = require('next-plugin-antd-less');

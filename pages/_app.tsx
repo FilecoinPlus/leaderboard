@@ -7,6 +7,7 @@ import {
   HttpLink,
 } from '@apollo/client';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 
 function createApolloClient() {
   const link = new HttpLink({
@@ -23,9 +24,15 @@ function createApolloClient() {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={createApolloClient()}>
-      <Component {...pageProps} />
-    </ApolloProvider>
+    <>
+      <Head>
+        <title>Filecoin Plus - Leaderboard</title>
+        <meta name='description' content='Filecoin Plus - Leaderboard App' />
+      </Head>
+      <ApolloProvider client={createApolloClient()}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </>
   );
 }
 

@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
   let notaries = _.orderBy(
     notariesData,
     ['verifiedClientsCount', 'initialAllowance'],
-    ['desc', 'desc']
+    ['desc', 'desc'],
   );
 
   const newNotariesArray = notaries.map(async (notary) => {
@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const secondsToDatacapForEveryClient = newInfo.data
       ?.filter(
-        (v: any) => !!v.createMessageTimestamp && !!v.issueCreateTimestamp
+        (v: any) => !!v.createMessageTimestamp && !!v.issueCreateTimestamp,
       )
       .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
       .filter((v: any) => v.addressId != notary.addressId)
@@ -84,18 +84,12 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const App: NextPage = (
-  pageProps: InferGetStaticPropsType<typeof getStaticProps>
+  pageProps: InferGetStaticPropsType<typeof getStaticProps>,
 ) => {
   // console.log(pageProps);
 
   return (
     <div className='App'>
-      <Head>
-        <title>Filecoin Plus - Leaderboard</title>
-        <meta name='description' content='Filecoin Plus - Leaderboard App' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
       <Layout className='layout'>
         <LayoutHeader />
 
