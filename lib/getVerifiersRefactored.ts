@@ -1,5 +1,5 @@
 import * as util from 'util';
-import { addHttpsIfNotLocal } from '../utils/general';
+import { addHttpsIfNotLocal, isAddressId, isAddressKey } from '../utils/general';
 import * as cheerio from 'cheerio';
 import markdownIt from 'markdown-it';
 import { Octokit } from 'octokit';
@@ -23,6 +23,7 @@ import {
 } from '../utils/regexes';
 import { getAddressIdFromKey } from './getAddressIdFromKey';
 import { getAddressKeyFromId } from './getAddressKeyFromId';
+import _ from 'lodash';
 
 util.inspect.defaultOptions = {
   colors: true,
@@ -79,23 +80,25 @@ const trimAndClean = (string: string) =>
     ?.replace(/<\/?[^>]*>/gi, '')
     ?.replace(/^\[|\]$/gi, '');
 
-const extractInfoFromIssues = (issues: any) =>
-  issues.map((v) => {
-    // console.log(v);
-    // return {...extractInfoFromIssue(v)};
-    return extractInfoFromIssue(v);
-  });
+const extractInfoFromIssues = async (issues: any) => {
+  const data = await Promise.allSettled(
+    issues.map((v) => {
+      // console.log(v);
+      // return {...extractInfoFromIssue(v)};
+      const data = extractInfoFromIssue(v);
+      return data;
+    }),
+  );
+  const returnThis = data.map((v) => v.status === 'fulfilled' && v.value);
+  // console.log(returnThis);
+  return returnThis;
+  // return data.map((v) => v.status === 'fulfilled' && v.value);
+};
 
-const extractInfoFromIssue = (issue) => {
-  // console.log();
-  // console.log(`👉 (${issue.number}) | issue ->`, issue);
-  // console.log(`👉 (${issue.number}) | issue.body ->`, issue.body);
+const extractInfoFromIssue = async (issue) => {
   const bodyParsed = markdownIt().render(issue.body);
-  // console.log(`👉 (${issue.number}) | bodyParsed ->`, bodyParsed);
 
-  const region =
-    getRegion(bodyParsed) && trimAndClean(getRegion(bodyParsed)[1]);
-  // console.log('region ->', region);
+  const region = getRegion(bodyParsed) && trimAndClean(getRegion(bodyParsed)[1]);
 
   // If address is not present in the issue body, we look for it in the comments
   let address = getAddress(bodyParsed);
@@ -107,30 +110,25 @@ const extractInfoFromIssue = (issue) => {
       ?.flatMap((v: any) => v.body)
       ?.filter((v: any) => /approved.*\r\n.*address/im.test(v))
       ?.flat();
-    newAddress =
-      address &&
-      /approved.*[\r\n]*.*address.*[\r\n]*.*\s+(f[0-9]+[^\r]+)/im.exec(
-        address[0],
-      );
+    newAddress = address && /approved.*[\r\n]*.*address.*[\r\n]*.*\s+(f[0-9]+[^\r]+)/im.exec(address[0]);
   }
   address = newAddress || (address && address[1]);
   address = trimAndClean(address);
 
-  // issue.number === 512 && console.log('bodyParsed ->', bodyParsed);
+  const addressId =
+    (isAddressId(address) && address) || (isAddressKey(address) && (await getAddressIdFromKey(address)));
+  const addressKey =
+    (isAddressKey(address) && address) || (isAddressId(address) && (await getAddressKeyFromId(address)));
   const name = getName(bodyParsed) && trimAndClean(getName(bodyParsed)[1]);
-  // console.log(`👉 (${issue.number}) | name ->`, name);
-
-  const organization =
-    getOrganization(bodyParsed) && trimAndClean(getOrganization(bodyParsed)[1]);
-
-  const websiteAndSocial =
-    getWebsiteAndSocial(bodyParsed) &&
-    trimAndClean(getWebsiteAndSocial(bodyParsed)[1]);
+  const organization = getOrganization(bodyParsed) && trimAndClean(getOrganization(bodyParsed)[1]);
+  const websiteAndSocial = getWebsiteAndSocial(bodyParsed) && trimAndClean(getWebsiteAndSocial(bodyParsed)[1]);
 
   // console.log();
   return {
     issueNumber: issue.number,
-    address,
+    addressId,
+    addressKey,
+    // address,
     name,
     organization,
     region,
@@ -165,9 +163,7 @@ const getIssue = async (issueNumber: number) => {
 
   return {
     ...response.repository.issue,
-    comments: response.repository.issue?.comments.edges?.flatMap(
-      (v) => v?.node,
-    ),
+    comments: response.repository.issue?.comments.edges?.flatMap((v) => v?.node),
   };
 };
 
@@ -175,7 +171,7 @@ const getIssues = async (num: number = 100) => {
   const QUERY = `
     query ($owner: String!, $repo: String!, $after: String, $num: Int = 100) {
       repository(owner:$owner, name:$repo) {
-        issues(first:$num, after:$after, orderBy: {field: CREATED_AT, direction: DESC}) {
+        issues(first:$num, after:$after, orderBy: {field: CREATED_AT, direction: ASC}) {
           pageInfo {
             startCursor
             endCursor
@@ -257,16 +253,17 @@ const getAllIssues = async (options: QueryOption = {}) => {
   });
 };
 
-const filterPossibleVerifiers = (list: any) =>
-  list.filter((v: {}) => Object.entries(v).filter((n) => n[1]).length > 3);
+const filterPossibleVerifiers = (list: any) => list.filter((v: {}) => Object.entries(v).filter((n) => n[1]).length > 3);
 
 export async function getVerifiers() {
-  const allIssues = await getAllIssues();
+  // const allIssues = await getAllIssues();
+  const allIssues = await getIssues(30);
   // const verifiers = filterPossibleVerifiers(
   //   extractInfoFromIssues(await getIssues()),
   // );
 
-  const verifiers = filterPossibleVerifiers(extractInfoFromIssues(allIssues));
+  // const verifiers = filterPossibleVerifiers(extractInfoFromIssues(allIssues));
+  const verifiers = filterPossibleVerifiers(await extractInfoFromIssues(allIssues));
   console.log('verifiers ->', verifiers);
 
   // console.log(await pullAllIssues());

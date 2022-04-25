@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 export default async function getAddressIdFromKey(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const apiEndpoint = 'https://api.node.glif.io/rpc/v0';
   // const addressKey = 'f1k6wwevxvp466ybil7y2scqlhtnrz5atjkkyvm4a';
@@ -26,6 +26,7 @@ export default async function getAddressIdFromKey(
 
   if (!!addressKey) {
     const data = await response.json();
+    // console.log('data ->', data);
     res.status(200).json(data);
   }
 

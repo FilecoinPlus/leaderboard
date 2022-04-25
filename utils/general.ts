@@ -33,3 +33,6 @@ export const getAverageTtd = (secondsToDatacapList: any) => {
     averageTtdInDuration,
   };
 };
+
+export const isAddressKey = (address) => address.length >= 14 && address.length <= 100;
+export const isAddressId = (address) => address.length <= 13;
