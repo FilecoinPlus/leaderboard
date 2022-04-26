@@ -1,5 +1,5 @@
 import * as util from 'util';
-import { addHttpsIfNotLocal, isAddressId, isAddressKey } from '../utils/general';
+import { addHttpsIfNotLocal, isAddressId, isAddressKey, normalizeVerifiers, trimAndClean } from '../utils/general';
 import * as cheerio from 'cheerio';
 import markdownIt from 'markdown-it';
 import { Octokit } from 'octokit';
@@ -24,6 +24,8 @@ import {
 import { getAddressIdFromKey } from './getAddressIdFromKey';
 import { getAddressKeyFromId } from './getAddressKeyFromId';
 import _ from 'lodash';
+import { extractedFromGithub } from '../mocks/extractedFromGithub';
+import { getVerifiersWithoutAllowanceArray } from '../mocks/getVerifiersWithoutAllowanceArray';
 
 util.inspect.defaultOptions = {
   colors: true,
@@ -74,12 +76,6 @@ export async function loopEdges<A>(
   return data;
 }
 
-const trimAndClean = (string: string) =>
-  string
-    ?.trim()
-    ?.replace(/<\/?[^>]*>/gi, '')
-    ?.replace(/^\[|\]$/gi, '');
-
 const extractInfoFromIssues = async (issues: any) => {
   const data = await Promise.allSettled(
     issues.map((v) => {
@@ -126,8 +122,8 @@ const extractInfoFromIssue = async (issue) => {
   // console.log();
   return {
     issueNumber: issue.number,
-    addressId,
-    addressKey,
+    addressId: addressId || null,
+    addressKey: addressKey || null,
     // address,
     name,
     organization,
@@ -255,16 +251,52 @@ const getAllIssues = async (options: QueryOption = {}) => {
 
 const filterPossibleVerifiers = (list: any) => list.filter((v: {}) => Object.entries(v).filter((n) => n[1]).length > 3);
 
+const filterExistsInInterplanetaryApi = (verifiers: any[]) => {
+  const verifiersFromIpo = getVerifiersWithoutAllowanceArray;
+  return verifiers.filter((verifier) =>
+    verifiersFromIpo.data.find((fromIpo) => {
+      const issueFromAuditTrail = /([0-9]+)$/im.exec(fromIpo.auditTrail) || [];
+      return (
+        verifier.addressId === fromIpo.addressId ||
+        verifier.addressKey === fromIpo.address ||
+        verifier.issueNumber === issueFromAuditTrail[1]
+      );
+    }),
+  );
+};
+
+const addInfoFromInterplanetaryApi = (verifiers: any[]) => {
+  const verifiersFromIpo = getVerifiersWithoutAllowanceArray;
+  return verifiers.map((verifier) => ({
+    ...verifier,
+    fromInterplanetaryOneApi: { ...verifiersFromIpo.data.find((fromIpo) => verifier.addressId === fromIpo.addressId) },
+    // fromInterplanetaryOneApiByIssueNumber: {
+    //   ...verifiersFromIpo.data.find((fromIpo) => {
+    //     const issueFromAuditTrail = /([0-9]+)$/im.exec(fromIpo.auditTrail) || [];
+    //     return verifier.issueNumber === issueFromAuditTrail[0];
+    //   }),
+    // },
+    // allFromInterplanetaryOneApi: [
+    //   ...verifiersFromIpo.data.filter((fromIpo) => verifier.addressId === fromIpo.addressId),
+    // ],
+  }));
+};
+
 export async function getVerifiers() {
   // const allIssues = await getAllIssues();
-  const allIssues = await getIssues(30);
+  // const allIssues = await getIssues(50);
   // const verifiers = filterPossibleVerifiers(
   //   extractInfoFromIssues(await getIssues()),
   // );
 
   // const verifiers = filterPossibleVerifiers(extractInfoFromIssues(allIssues));
-  const verifiers = filterPossibleVerifiers(await extractInfoFromIssues(allIssues));
+  const verifiersMock = extractedFromGithub;
+  // const verifiers = verifiersMock;
+  // const verifiers = normalizeVerifiers(verifiersMock);
+  // const verifiers = addInfoFromInterplanetaryApi(filterExistsInInterplanetaryApi(verifiersMock));
+  const verifiers = normalizeVerifiers(addInfoFromInterplanetaryApi(filterExistsInInterplanetaryApi(verifiersMock)));
   console.log('verifiers ->', verifiers);
+  console.log('verifiers.length ->', verifiers.length);
 
   // console.log(await pullAllIssues());
 

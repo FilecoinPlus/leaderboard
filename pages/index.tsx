@@ -1,17 +1,6 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import {
-  Layout,
-  Row,
-  Typography,
-  Divider,
-  Input,
-  Select,
-  Statistic,
-  Card,
-  Col,
-  Space,
-} from 'antd';
+import { Layout, Row, Typography, Divider, Input, Select, Statistic, Card, Col, Space } from 'antd';
 import getVerifiersMock from '../mocks/getVerifiersMock';
 import _ from 'lodash';
 import { loadVerifiers } from '../lib/fetch-verifiers';
@@ -22,12 +11,7 @@ import { formatData } from '../utils/formats';
 import { getAverageTtd } from '../utils/general';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
-import {
-  LayoutHeader,
-  LayoutFooter,
-  NotaryCard,
-  NotaryTable,
-} from '../components';
+import { LayoutHeader, LayoutFooter, NotaryCard, NotaryTable } from '../components';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -37,44 +21,34 @@ export const getStaticProps: GetStaticProps = async () => {
   // const verifiers = await loadVerifiers();
   // const notariesData = verifiers.data;
   const notariesData = getVerifiersMock.data;
+  const orderVerifiers = (verifiers) => _.orderBy(notariesData, ['verifiedClientsCount', 'initialAllowance'], ['desc', 'desc']);
+  let notaries = orderVerifiers(notariesData);
 
-  let notaries = _.orderBy(
-    notariesData,
-    ['verifiedClientsCount', 'initialAllowance'],
-    ['desc', 'desc'],
-  );
+  notaries = await Promise.all(
+    notaries.map(async (notary) => {
+      const newInfo = await loadVerifiersMoreInfo(notary.addressId);
 
-  const newNotariesArray = notaries.map(async (notary) => {
-    const newInfo = await loadVerifiersMoreInfo(notary.addressId);
+      const removeInvalidTimestamps = (verifier: any) =>
+        verifier
+          ?.filter((v: any) => !!v.createMessageTimestamp && !!v.issueCreateTimestamp)
+          .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
+          .filter((v: any) => v.addressId != notary.addressId);
 
-    const secondsToDatacapForEveryClient = newInfo.data
-      ?.filter(
-        (v: any) => !!v.createMessageTimestamp && !!v.issueCreateTimestamp,
-      )
-      .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
-      .filter((v: any) => v.addressId != notary.addressId)
-      .map((v: any) => {
+      const secondsToDatacapForEveryClient = removeInvalidTimestamps(newInfo.data).map((v: any) => {
         return v.createMessageTimestamp - v.issueCreateTimestamp;
       });
 
-    const ttdAverages = getAverageTtd(secondsToDatacapForEveryClient);
+      const addressId = notary.addressId || (notary.address && (await getAddressIdFromKey(notary.address)));
+      const addressKey = notary.address || (notary.addressId && (await getAddressKeyFromId(notary.addressId)));
 
-    const addressId =
-      notary.addressId ||
-      (notary.address && (await getAddressIdFromKey(notary.address)));
-    const addressKey =
-      notary.address ||
-      (notary.addressId && (await getAddressKeyFromId(notary.addressId)));
-
-    return {
-      ...notary,
-      addressId,
-      address: addressKey,
-      ttdAverages,
-    };
-  });
-
-  notaries = await Promise.all(newNotariesArray);
+      return {
+        ...notary,
+        addressId,
+        addressKey,
+        ttdAverages: getAverageTtd(secondsToDatacapForEveryClient),
+      };
+    }),
+  );
 
   return {
     props: {
@@ -83,10 +57,8 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const App: NextPage = (
-  pageProps: InferGetStaticPropsType<typeof getStaticProps>,
-) => {
-  // console.log(pageProps);
+const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>) => {
+  console.log('pageProps ->', pageProps);
 
   return (
     <div className='App'>
