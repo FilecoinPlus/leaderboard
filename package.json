@@ -11,7 +11,7 @@
   "dependencies": {
     "@ant-design/aliyun-theme": "^0.0.5",
     "@ant-design/icons": "^4.7.0",
-    "@ant-design/pro-card": "^1.19.1",
+    "@ant-design/pro-card": "^1.20.0",
     "@apollo/client": "^3.5.10",
     "@apollo/rover": "^0.5.1",
     "@glif/filecoin-address": "^2.0.0-beta.3",
@@ -23,7 +23,7 @@
     "@types/markdown-it": "^12.2.3",
     "@vercel/fetch": "^6.2.0",
     "@vercel/node": "^1.14.1",
-    "antd": "^4.19.5",
+    "antd": "^4.20.1",
     "apollo-datasource-rest": "^3.5.2",
     "apollo-server-core": "^3.6.7",
     "apollo-server-micro": "^3.6.7",
