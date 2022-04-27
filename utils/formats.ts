@@ -27,7 +27,7 @@ export const formatData = (props: any) =>
       return {
         key: index,
         name: notary.name,
-        organization: notary.organization,
+        organization: notary.organization || '–',
         location: (_.isArray(notary.region) && formatRegion(notary.region)) || ['–'],
         addressId: notary.addressId || '–',
         addressKey: notary.addressKey || '–',
