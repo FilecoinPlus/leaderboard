@@ -1,4 +1,5 @@
-import { Table, Typography, Tag } from 'antd';
+import { FieldTimeOutlined } from '@ant-design/icons';
+import { Table, Typography, Tag, Space } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import _, { values } from 'lodash';
 
@@ -14,10 +15,20 @@ export const NotaryTable = (props: any) => {
       key: 'averageTtd',
       title: 'Average TTD',
       dataIndex: 'averageTtd',
-      // width: 140,
+      width: 135,
       defaultSortOrder: 'ascend',
       sorter: (a, b) => a.averageTtdRaw - b.averageTtdRaw,
-      render: (value) => <Tag color='default'>{value}</Tag>,
+      render: (value) => {
+        if (value === '–') return <span>{value}</span>;
+        return (
+          <Tag color='default'>
+            <Space size={'small'}>
+              <FieldTimeOutlined />
+              {value}
+            </Space>
+          </Tag>
+        );
+      },
     },
     {
       key: 'name',
@@ -31,6 +42,7 @@ export const NotaryTable = (props: any) => {
           <Link
             href={record.url}
             // style={{ color: 'inherit' }}
+            // style={{ fontWeight: 500 }}
           >
             {value}
           </Link>
@@ -54,7 +66,13 @@ export const NotaryTable = (props: any) => {
         value.map((v: any, index: any) => {
           return (
             // <Tag key={index} color='default'>
-            <span key={index}>{value}</span>
+            <span
+              key={index}
+              // style={{ color: 'rgba(0, 0, 0, 0.55)' }}
+              // style={{ fontWeight: 300 }}
+            >
+              {value}
+            </span>
             // </Tag>
           );
         }),
@@ -65,6 +83,7 @@ export const NotaryTable = (props: any) => {
       dataIndex: 'addressId',
       // width: 140,
       responsive: ['lg'],
+      // render: (value) => <span style={{ color: 'rgba(0, 0, 0, 0.55)' }}>{value}</span>,
     },
     {
       key: 'addressKey',
@@ -73,15 +92,17 @@ export const NotaryTable = (props: any) => {
       // width: 140,
       ellipsis: true,
       responsive: ['lg'],
+      // render: (value) => <span style={{ color: 'rgba(0, 0, 0, 0.55)' }}>{value}</span>,
     },
     {
       key: 'clients',
       title: 'Clients',
       dataIndex: 'clients',
-      // width: 120,
+      width: 100,
       align: 'right',
       responsive: ['md'],
       sorter: (a, b) => a.clients - b.clients,
+      // render: (value) => <span style={{ color: 'rgba(0, 0, 0, 0.55)' }}>{value}</span>,
     },
     {
       key: 'datacapTotal',
@@ -91,6 +112,7 @@ export const NotaryTable = (props: any) => {
       align: 'right',
       responsive: ['lg'],
       sorter: (a, b) => a.datacapTotalRaw - b.datacapTotalRaw,
+      // render: (value) => <span style={{ color: 'rgba(0, 0, 0, 0.55)' }}>{value}</span>,
     },
     {
       key: 'datacapAvailable',
@@ -100,6 +122,7 @@ export const NotaryTable = (props: any) => {
       align: 'right',
       // responsive: ['sm'],
       sorter: (a, b) => a.datacapAvailableRaw - b.datacapAvailableRaw,
+      // render: (value) => <span style={{ color: 'rgba(0, 0, 0, 0.55)' }}>{value}</span>,
     },
     {
       key: 'datacapAllocated',
@@ -109,6 +132,7 @@ export const NotaryTable = (props: any) => {
       align: 'right',
       responsive: ['sm'],
       sorter: (a, b) => a.datacapAllocatedRaw - b.datacapAllocatedRaw,
+      // render: (value) => <span style={{ color: 'rgba(0, 0, 0, 0.55)' }}>{value}</span>,
     },
   ];
 
