@@ -54,7 +54,7 @@ export const NotaryTable = (props: any) => {
         value.map((v: any, index: any) => {
           return (
             // <Tag key={index} color='default'>
-            <>{value}</>
+            <span key={index}>{value}</span>
             // </Tag>
           );
         }),
