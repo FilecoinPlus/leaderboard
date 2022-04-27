@@ -11,7 +11,7 @@ class InterPlanetaryOneAPI extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
-    request.headers.set('x-api-key', '299416a2-ebcb-46ba-8675-6a9a115d7ec0');
+    request.headers.set('x-api-key', `${process.env.INTERPLANETARY_ONE_API_KEY}`);
   }
 
   verifierReducer(verifier: any) {

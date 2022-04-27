@@ -26,6 +26,7 @@ import { getAddressKeyFromId } from './getAddressKeyFromId';
 import _ from 'lodash';
 import { extractedFromGithub } from '../mocks/extractedFromGithub';
 import { getVerifiersWithoutAllowanceArray } from '../mocks/getVerifiersWithoutAllowanceArray';
+import { getVerifiersWithAllowanceArray } from '../mocks/getVerifiersWithAllowanceArray';
 
 util.inspect.defaultOptions = {
   colors: true,
@@ -266,7 +267,8 @@ const filterExistsInInterplanetaryApi = (verifiers: any[]) => {
 };
 
 const addInfoFromInterplanetaryApi = (verifiers: any[]) => {
-  const verifiersFromIpo = getVerifiersWithoutAllowanceArray;
+  // const verifiersFromIpo = getVerifiersWithoutAllowanceArray;
+  const verifiersFromIpo = getVerifiersWithAllowanceArray;
   return verifiers.map((verifier) => ({
     ...verifier,
     fromInterplanetaryOneApi: { ...verifiersFromIpo.data.find((fromIpo) => verifier.addressId === fromIpo.addressId) },
@@ -295,7 +297,7 @@ export async function getVerifiers() {
   // const verifiers = normalizeVerifiers(verifiersMock);
   // const verifiers = addInfoFromInterplanetaryApi(filterExistsInInterplanetaryApi(verifiersMock));
   const verifiers = normalizeVerifiers(addInfoFromInterplanetaryApi(filterExistsInInterplanetaryApi(verifiersMock)));
-  console.log('verifiers ->', verifiers);
+  // console.log('verifiers ->', verifiers);
   console.log('verifiers.length ->', verifiers.length);
 
   // console.log(await pullAllIssues());

@@ -4,9 +4,11 @@ import {
   regionIsAfrica,
   regionIsAsiaNotGreaterChina,
   regionIsEurope,
+  regionIsGlobal,
   regionIsGreaterChina,
   regionIsNorthAmerica,
   regionIsOceania,
+  regionIsOther,
   regionIsSouthAmerica,
 } from './regexes';
 
@@ -48,6 +50,17 @@ export const trimAndClean = (string: string) =>
     ?.replace(/^\[|\]$/gi, '');
 
 export const normalizeVerifier = (verifier: {}) => {
+  const regions = [
+    'AFRICA',
+    'ASIA_NOT_GREATER_CHINA',
+    'EUROPE',
+    'GREATER_CHINA',
+    'NORTH_AMERICA',
+    'OCEANIA',
+    'SOUTH_AMERICA',
+    'GLOBAL',
+    'OTHER',
+  ];
   const normalizeRegion = (region) => region;
   return Object.fromEntries(
     Object.entries(verifier).map(([key, value]) => {
@@ -61,7 +74,10 @@ export const normalizeVerifier = (verifier: {}) => {
         if (regionIsNorthAmerica(newValue)) newValue = 'NORTH_AMERICA';
         if (regionIsOceania(newValue)) newValue = 'OCEANIA';
         if (regionIsSouthAmerica(newValue)) newValue = 'SOUTH_AMERICA';
-        newValue = [newValue];
+        if (regionIsGlobal(newValue)) newValue = 'GLOBAL';
+        if (regionIsOther(newValue)) newValue = 'OTHER';
+        const region = [newValue].filter((v) => regions.includes(v));
+        newValue = (region?.length && region) || ['OTHER'];
       }
 
       if (key === 'organization' && _.isString(newValue)) {

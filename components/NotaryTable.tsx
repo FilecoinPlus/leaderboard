@@ -17,6 +17,7 @@ export const NotaryTable = (props: any) => {
       // width: 140,
       defaultSortOrder: 'ascend',
       sorter: (a, b) => a.averageTtdRaw - b.averageTtdRaw,
+      render: (value) => <Tag color='default'>{value}</Tag>,
     },
     {
       key: 'name',
@@ -27,7 +28,10 @@ export const NotaryTable = (props: any) => {
       // fixed: 'left',
       render: (value, record, index) => {
         return (
-          <Link href={record.url} style={{ color: 'inherit' }}>
+          <Link
+            href={record.url}
+            style={{ color: 'inherit' }}
+          >
             {value}
           </Link>
         );
@@ -49,9 +53,9 @@ export const NotaryTable = (props: any) => {
       render: (value) =>
         value.map((v: any, index: any) => {
           return (
-            <Tag key={index} color='default'>
-              {value}
-            </Tag>
+            // <Tag key={index} color='default'>
+            <>{value}</>
+            // </Tag>
           );
         }),
     },
@@ -116,8 +120,7 @@ export const NotaryTable = (props: any) => {
       // size='middle'
       onChange={onChange}
       pagination={{
-        showTotal: (total, range) =>
-          `${range[0]}-${range[1]} of ${total} notaries`,
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} notaries`,
       }}
       // scroll={{ x: 'max-content' }}
     />

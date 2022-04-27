@@ -4,7 +4,7 @@ export async function loadVerifiers() {
     // 'https://api.filplus.d.interplanetary.one/public/api/getVerifiers',
     {
       headers: {
-        'x-api-key': `299416a2-ebcb-46ba-8675-6a9a115d7ec0`,
+        'x-api-key': `${process.env.INTERPLANETARY_ONE_API_KEY}`,
       },
     }
   );

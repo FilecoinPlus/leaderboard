@@ -11,3 +11,5 @@ export const regionIsGreaterChina = (v): any => /^\s*(Asia.GCN|GCN.Asia|China|Gr
 export const regionIsNorthAmerica = (v): any => /^\s*(n\/a|North.America|NA)\s*$/im.test(v);
 export const regionIsOceania = (v): any => /^\s*(Oceania)\s*$/im.test(v);
 export const regionIsSouthAmerica = (v): any => /^\s*(South.America)\s*$/im.test(v);
+export const regionIsGlobal = (v): any => /^\s*(Global)\s*$/im.test(v);
+export const regionIsOther = (v): any => /^\s*(Other)\s*$/im.test(v);
