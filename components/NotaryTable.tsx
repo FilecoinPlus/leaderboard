@@ -30,7 +30,7 @@ export const NotaryTable = (props: any) => {
         return (
           <Link
             href={record.url}
-            style={{ color: 'inherit' }}
+            // style={{ color: 'inherit' }}
           >
             {value}
           </Link>
