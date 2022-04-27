@@ -1,6 +1,20 @@
 import _ from 'lodash';
 import prettyBytes from 'pretty-bytes';
 
+const formatRegion = (regions: string[]) =>
+  regions.map((region) => {
+    if (region === 'AFRICA') return 'Africa';
+    if (region === 'ASIA_NOT_GREATER_CHINA') return 'Asia (excl. Greater China)';
+    if (region === 'EUROPE') return 'Europe';
+    if (region === 'GREATER_CHINA') return 'Greater China';
+    if (region === 'NORTH_AMERICA') return 'North America';
+    if (region === 'OCEANIA') return 'Oceania';
+    if (region === 'SOUTH_AMERICA') return 'South America';
+    if (region === 'GLOBAL') return 'Global';
+    if (region === 'OTHER') return 'Other';
+    return region;
+  });
+
 export const formatData = (props: any) =>
   props.notaries
     .filter((v: any) => !!v.name)
@@ -14,7 +28,7 @@ export const formatData = (props: any) =>
         key: index,
         name: notary.name,
         organization: notary.organization,
-        location: notary.region || ['–'],
+        location: (_.isArray(notary.region) && formatRegion(notary.region)) || ['–'],
         addressId: notary.addressId || '–',
         addressKey: notary.addressKey || '–',
         // url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,

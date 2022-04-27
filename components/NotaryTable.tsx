@@ -48,7 +48,7 @@ export const NotaryTable = (props: any) => {
       title: 'Location',
       dataIndex: 'location',
       // width: 120,
-      sorter: true,
+      // sorter: true,
       responsive: ['lg'],
       render: (value) =>
         value.map((v: any, index: any) => {
