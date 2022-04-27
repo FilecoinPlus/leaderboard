@@ -10,7 +10,7 @@ export const LayoutFooter = () => {
       </Space>
       <Footer style={{ textAlign: 'center' }}>
         &copy; Filecoin Foundation
-        <Divider type='vertical' />
+        {/* <Divider type='vertical' />
         <a href='#'>Terms</a>
         <Divider type='vertical' />
         <a href='#'>Privacy</a>
@@ -19,7 +19,7 @@ export const LayoutFooter = () => {
         <Divider type='vertical' />
         <a href='#'>Docs</a>
         <Divider type='vertical' />
-        <a href='#'>About</a>
+        <a href='#'>About</a> */}
       </Footer>
     </div>
   );
