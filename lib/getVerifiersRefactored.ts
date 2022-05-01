@@ -1,5 +1,12 @@
 import * as util from 'util';
-import { addHttpsIfNotLocal, isAddressId, isAddressKey, normalizeVerifiers, trimAndClean } from '../utils/general';
+import {
+  addHttpsIfNotLocal,
+  getAverageTtd,
+  isAddressId,
+  isAddressKey,
+  normalizeVerifiers,
+  trimAndClean,
+} from '../utils/general';
 import * as cheerio from 'cheerio';
 import markdownIt from 'markdown-it';
 import { Octokit } from 'octokit';
@@ -29,6 +36,7 @@ import { getVerifiersWithoutAllowanceArray } from '../mocks/getVerifiersWithoutA
 import { getVerifiersWithAllowanceArray } from '../mocks/getVerifiersWithAllowanceArray';
 import { getIssues } from './getIssues';
 import { getVerifiersFromIssues } from './getVerifiersFromIssues';
+import verifier from './verifier';
 
 util.inspect.defaultOptions = {
   colors: true,
@@ -150,6 +158,61 @@ const enrichWithInfoFromInterplanetaryOne = (verifiers: any[]) => {
     //   ...verifiersFromIpo.data.filter((fromIpo) => verifier.addressId === fromIpo.addressId),
     // ],
   }));
+};
+
+// TODO: refactor & remove
+export const getVerifiersWithTemporaryEnrichment = async () => {
+  // const verifiers = await loadVerifiers();
+  // const notariesData = verifiers.data;
+  // const notariesData = getVerifiersMock.data;
+  // const notariesData = {...await getVerifiers, verifiedClientsCount: 0, initialAllowance: 0, };
+  let notariesData = await getVerifiers({ enrichedBy: 'INTERPLANETARY_ONE' });
+  notariesData = _.orderBy(notariesData, ['issueNumber'], ['desc']);
+  notariesData = _.uniqBy(notariesData, 'addressId');
+  // console.log('notariesData ->', notariesData);
+  notariesData = notariesData.map((v) => ({
+    ...v,
+    verifiedClientsCount: v.fromInterplanetaryOneApi.verifiedClientsCount || 0,
+    initialAllowance: v.fromInterplanetaryOneApi.initialAllowance || 0,
+    allowance: v.fromInterplanetaryOneApi.allowance || 0,
+    allowanceArray: v.fromInterplanetaryOneApi.allowanceArray || [],
+    auditTrail: v.fromInterplanetaryOneApi.auditTrail || null,
+  }));
+  // console.log('notariesData ->', notariesData);
+
+  const orderVerifiers = (verifiers) =>
+    _.orderBy(notariesData, ['verifiedClientsCount', 'initialAllowance'], ['desc', 'desc']);
+  let notaries = orderVerifiers(notariesData);
+
+  notaries = await Promise.all(
+    notaries.map(async (notary) => {
+      const verifiedClients = await verifier.getVerifiedClients(notary.addressId);
+      const verifiedClientsData = verifiedClients?.data || [];
+      console.log('verifiedClientsData.length ->', verifiedClientsData.length);
+      const addressId = notary.addressId || (notary.address && (await getAddressIdFromKey(notary.address))) || null;
+      const addressKey = notary.address || (notary.addressId && (await getAddressKeyFromId(notary.addressId))) || null;
+
+      const removeInvalidTimestamps = (verifier: any) =>
+        verifier
+          .filter((v: any) => !!v.createMessageTimestamp)
+          .filter((v: any) => !!v.issueCreateTimestamp)
+          .filter((v: any) => v.createMessageTimestamp > v.issueCreateTimestamp)
+          .filter((v: any) => v.addressId != notary.addressId);
+
+      const secondsToDatacapForEveryClient = removeInvalidTimestamps(verifiedClientsData).map((v: any) => {
+        return v.createMessageTimestamp - v.issueCreateTimestamp;
+      });
+
+      return {
+        ...notary,
+        addressId,
+        addressKey,
+        ttdAverages: getAverageTtd(secondsToDatacapForEveryClient),
+      };
+    }),
+  );
+
+  return notaries;
 };
 
 export async function getVerifiers(options?: { enrichedBy: string | undefined }) {
