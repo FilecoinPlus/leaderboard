@@ -97,6 +97,7 @@ const getAllIssues = async (options: QueryOption = {}) => {
 export async function getIssues() {
   const allIssues = await getAllIssues();
   console.log('allIssues.length ->', allIssues.length);
+  // console.log('issueNumber(460) ->', allIssues.filter(v => v.number === 460));
 
   return allIssues;
 }
