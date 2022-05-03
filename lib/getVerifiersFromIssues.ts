@@ -33,7 +33,7 @@ export const getVerifiersFromIssues = async (
   // return data.map((v) => v.status === 'fulfilled' && v.value);
 };
 
-const getVerifierFromIssue = async (issue) => {
+export const getVerifierFromIssue = async (issue: any = undefined, options?: { normalized: boolean | undefined }) => {
   const bodyParsed = markdownIt().render(issue.body);
 
   const region = getRegion(bodyParsed) && trimAndClean(getRegion(bodyParsed)[1]);
@@ -58,6 +58,8 @@ const getVerifierFromIssue = async (issue) => {
   const addressKey =
     (isAddressKey(address) && address) || (isAddressId(address) && (await getAddressKeyFromId(address)));
   const name = getName(bodyParsed) && trimAndClean(getName(bodyParsed)[1]);
+  // if (issue.number === 460) console.log('bodyParsed(460) ->', bodyParsed);
+  // if (issue.number === 460) console.log('getName(bodyParsed)(460) ->', getName(bodyParsed));
   const organization = getOrganization(bodyParsed) && trimAndClean(getOrganization(bodyParsed)[1]);
   const websiteAndSocial = getWebsiteAndSocial(bodyParsed) && trimAndClean(getWebsiteAndSocial(bodyParsed)[1]);
 
