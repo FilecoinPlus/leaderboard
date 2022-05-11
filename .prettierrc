@@ -10,5 +10,16 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "useTabs": false,
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "importOrder": [
+    "^@vercel/?(.*)?$",
+    "^next/?(.*)?$",
+    "^antd/?(.*)?$",
+    "<THIRD_PARTY_MODULES>",
+    "^[.]{2}[/]lib/(.*)$",
+    "^[.]{2}[/]components/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
