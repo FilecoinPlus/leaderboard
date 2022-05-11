@@ -1,10 +1,16 @@
+import { Card, Col, Divider, Row, Statistic } from 'antd';
+
 import { ArrowDownOutlined } from '@ant-design/icons';
-import { Card, Row, Col, Divider, Statistic } from 'antd';
 
 export const StatsCard = (props: any) => {
   return (
     <Row gutter={16}>
-      <Col span={4} xs={6} md={5} sm={4}>
+      <Col
+        span={4}
+        xs={6}
+        md={5}
+        sm={4}
+      >
         <Card>
           <Statistic
             title='Time To DataCap (MoM, avg.)'
@@ -16,7 +22,12 @@ export const StatsCard = (props: any) => {
           />
         </Card>
       </Col>
-      <Col span={4} xs={6} md={5} sm={4}>
+      <Col
+        span={4}
+        xs={6}
+        md={5}
+        sm={4}
+      >
         <Card>
           <Statistic
             title='DataCap Used In Deals (QoQ)'

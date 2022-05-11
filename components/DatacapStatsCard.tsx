@@ -1,11 +1,14 @@
-import { Card, Row, Col, Divider, Statistic } from 'antd';
+import { Card, Col, Divider, Row, Statistic } from 'antd';
 
 export const DatacapStatsCard = (props: any) => {
   return (
     <div className='DatacapStatsCard'>
       <Divider plain>DataCap</Divider>
 
-      <Row gutter={8} justify='space-around'>
+      <Row
+        gutter={8}
+        justify='space-around'
+      >
         <Col flex='auto'>
           <Card size='small'>
             <Statistic

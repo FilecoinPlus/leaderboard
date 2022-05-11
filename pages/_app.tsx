@@ -1,13 +1,10 @@
 // import 'antd/dist/antd.css';
-import '../styles/variables.less';
-import {
-  ApolloProvider,
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-} from '@apollo/client';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
+
+import '../styles/variables.less';
 
 function createApolloClient() {
   const link = new HttpLink({
@@ -27,7 +24,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Filecoin Plus - Leaderboard</title>
-        <meta name='description' content='Filecoin Plus - Leaderboard App' />
+        <meta
+          name='description'
+          content='Filecoin Plus - Leaderboard App'
+        />
       </Head>
       <ApolloProvider client={createApolloClient()}>
         <Component {...pageProps} />

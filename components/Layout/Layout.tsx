@@ -1,6 +1,7 @@
-import Header from './Header';
+import { Col, Layout as LayoutAntd, Row, Space } from 'antd';
+
 import Footer from './Footer';
-import { Layout as LayoutAntd, Row, Col, Space } from 'antd';
+import Header from './Header';
 
 const Layout = ({ children }) => (
   <LayoutAntd style={{ minHeight: '100vh' }}>

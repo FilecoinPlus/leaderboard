@@ -1,6 +1,7 @@
-import { FieldTimeOutlined } from '@ant-design/icons';
-import { Table, Typography, Tag, Space } from 'antd';
+import { Space, Table, Tag, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+
+import { FieldTimeOutlined } from '@ant-design/icons';
 import _, { values } from 'lodash';
 
 const { Link } = Typography;

@@ -1,10 +1,13 @@
-import { Card, Row, Col, Divider, Statistic } from 'antd';
+import { Card, Col, Divider, Row, Statistic } from 'antd';
 
 export const GeneralStatsCard = (props: any) => {
   return (
     <div className='GeneralStatsCard'>
       <Divider plain>General</Divider>
-      <Row gutter={8} justify='space-around'>
+      <Row
+        gutter={8}
+        justify='space-around'
+      >
         <Col flex='auto'>
           <Card size='small'>
             <Statistic
