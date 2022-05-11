@@ -9,7 +9,7 @@ function onChange(pagination: any, sorter: any, extra: any) {
   // console.log('params', pagination, sorter, extra);
 }
 
-export const NotaryTable = (props: any) => {
+export const VerifierTable = (props: any) => {
   const columns: ColumnsType<any> = [
     {
       key: 'averageTtd',

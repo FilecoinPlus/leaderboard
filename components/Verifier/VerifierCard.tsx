@@ -1,12 +1,12 @@
 import { Card, Avatar, Col, Typography } from 'antd';
 import { GlobalOutlined, UserOutlined } from '@ant-design/icons';
-import { GeneralStatsCard } from './GeneralStatsCard';
-import { DatacapStatsCard } from './DatacapStatsCard';
+import { GeneralStatsCard } from '../GeneralStatsCard';
+import { DatacapStatsCard } from '../DatacapStatsCard';
 
 const { Meta } = Card;
 const { Text, Link } = Typography;
 
-export const NotaryCard = (props: any) => {
+export const VerifierCard = (props: any) => {
   return (
     <Col className='notary-card' span={4}>
       <Col
