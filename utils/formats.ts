@@ -17,6 +17,7 @@ const formatRegion = (regions: string[]) =>
 
 export const formatData = (props: any) =>
   props.notaries
+    // TODO(alexxnica): move the filtering to the `data` repository.
     .filter((v: any) => !!v.name)
     .filter((v: any) => v.name != 'n/a')
     .filter((v: any) => !/Testing[^a-zA-Z]*Deleted/i.test(v.name))
@@ -35,17 +36,25 @@ export const formatData = (props: any) =>
         url:
           _.isNumber(notary.issueNumber) &&
           `https://github.com/filecoin-project/notary-governance/issues/${notary.issueNumber}`,
-        clients: notary.verifiedClientsCount,
-        datacapAvailable: prettyBytes(Number(notary.allowance), {
+        clients: notary.fromInterplanetaryOne.verifiedClientsCount,
+        datacapAvailable: prettyBytes(Number(notary.fromInterplanetaryOne.allowance), {
           binary: true,
         }),
-        datacapAvailableRaw: Number(notary.allowance),
-        // datacapAllocated: bytesToSize(Number((Number(notary.initialAllowance)-Number(notary.allowance))))
-        datacapAllocated: prettyBytes(Number(notary.initialAllowance) - Number(notary.allowance), { binary: true }),
-        datacapAllocatedRaw: Number(notary.initialAllowance) - Number(notary.allowance),
-        datacapTotal: prettyBytes(Number(notary.initialAllowance) + Number(notary.allowance), { binary: true }),
-        datacapTotalRaw: Number(notary.initialAllowance) + Number(notary.allowance),
-        averageTtd: notary.ttdAverages.averageTtdInDuration || '–',
-        averageTtdRaw: notary.ttdAverages.averageTtdInSeconds || 999999999,
+        datacapAvailableRaw: Number(notary.fromInterplanetaryOne.allowance),
+        // datacapAllocated: bytesToSize(Number((Number(notary.fromInterplanetaryOne.initialAllowance)-Number(notary.fromInterplanetaryOne.allowance))))
+        datacapAllocated: prettyBytes(
+          Number(notary.fromInterplanetaryOne.initialAllowance) - Number(notary.fromInterplanetaryOne.allowance),
+          { binary: true },
+        ),
+        datacapAllocatedRaw:
+          Number(notary.fromInterplanetaryOne.initialAllowance) - Number(notary.fromInterplanetaryOne.allowance),
+        datacapTotal: prettyBytes(
+          Number(notary.fromInterplanetaryOne.initialAllowance) + Number(notary.fromInterplanetaryOne.allowance),
+          { binary: true },
+        ),
+        datacapTotalRaw:
+          Number(notary.fromInterplanetaryOne.initialAllowance) + Number(notary.fromInterplanetaryOne.allowance),
+        averageTtd: notary.ttdAverages.averageTtd || '–',
+        averageTtdRaw: notary.ttdAverages.averageTtdRaw || 999999999,
       };
     });

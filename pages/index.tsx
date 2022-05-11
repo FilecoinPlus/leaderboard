@@ -1,25 +1,17 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { Layout, Row, Typography, Divider, Input, Select, Statistic, Card, Col, Space } from 'antd';
-import getVerifiersMock from '../mocks/getVerifiersMock';
-import { getVerifiers, getVerifiersWithTemporaryEnrichment } from '../lib/getVerifiersRefactored';
+import { getVerifiers } from '../lib/getVerifiers';
 import _ from 'lodash';
-import { loadVerifiers } from '../lib/fetch-verifiers';
-import { loadVerifiersMoreInfo } from '../lib/fetch-verifiers-more-info';
-import { getAddressKeyFromId } from '../lib/getAddressKeyFromId';
-import { getAddressIdFromKey } from '../lib/getAddressIdFromKey';
 import { formatData } from '../utils/formats';
-import { getAverageTtd } from '../utils/general';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 import { LayoutHeader, LayoutFooter, NotaryCard, NotaryTable } from '../components';
 import verifier from '../lib/verifier';
 
 const { Content } = Layout;
 const { Title } = Typography;
-const { Option } = Select;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const verifiers = await getVerifiersWithTemporaryEnrichment();
+  const verifiers = await getVerifiers();
 
   return {
     props: {
@@ -29,6 +21,8 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>) => {
+  console.log('pageProps.notaries ->', pageProps.notaries[0]);
+  // return <></>;
   // console.log('pageProps.notaries.slice(0,1) ->', pageProps.notaries.slice(0, 1));
 
   return (
