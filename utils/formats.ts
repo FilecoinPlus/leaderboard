@@ -15,9 +15,9 @@ const formatRegion = (regions: string[]) =>
     return region;
   });
 
-export const formatData = (props: any) =>
-  props.notaries
-    // TODO(alexxnica): move the filtering to the `data` repository.
+export const formatData = (verifiers) =>
+  verifiers
+    // TODO(alexxnica): move filters to the `data` repository.
     .filter((v: any) => !!v.name)
     .filter((v: any) => v.name != 'n/a')
     .filter((v: any) => !/Testing[^a-zA-Z]*Deleted/i.test(v.name))
@@ -26,10 +26,11 @@ export const formatData = (props: any) =>
       // const orgName = notary.name.match(/\(([^\(\)]+)\)/i);
       // console.log('notary ->', notary);
       return {
+        ...notary,
         key: index,
         name: notary.name,
         organization: notary.organization || '–',
-        location: (_.isArray(notary.region) && formatRegion(notary.region)) || ['–'],
+        region: (_.isArray(notary.region) && formatRegion(notary.region)) || ['–'],
         addressId: notary.addressId || '–',
         addressKey: notary.addressKey || '–',
         // url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
@@ -49,11 +50,11 @@ export const formatData = (props: any) =>
         datacapAllocatedRaw:
           Number(notary.fromInterplanetaryOne.initialAllowance) - Number(notary.fromInterplanetaryOne.allowance),
         datacapTotal: prettyBytes(
-          Number(notary.fromInterplanetaryOne.initialAllowance) + Number(notary.fromInterplanetaryOne.allowance),
+          Number(notary.fromInterplanetaryOne.initialAllowance),
           { binary: true },
         ),
         datacapTotalRaw:
-          Number(notary.fromInterplanetaryOne.initialAllowance) + Number(notary.fromInterplanetaryOne.allowance),
+          Number(notary.fromInterplanetaryOne.initialAllowance),
         averageTtd: notary.ttdAverages.averageTtd || '–',
         averageTtdRaw: notary.ttdAverages.averageTtdRaw || 999999999,
       };
