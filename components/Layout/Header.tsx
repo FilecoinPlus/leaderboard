@@ -24,18 +24,18 @@ const Header = () => {
             // style={{ alignSelf: 'center' }}
           />
         </div>
-        {/* <Menu
+        <Menu
           mode='horizontal'
           // defaultSelectedKeys={['overview']}
           items={items}
-        /> */}
-        <Menu
+        />
+        {/* <Menu
           mode='horizontal'
           // defaultSelectedKeys={['overview']}
         >
           <Menu.Item key="1">Test</Menu.Item>
           <Menu.Item key="2">Test2</Menu.Item>
-        </Menu>
+        </Menu> */}
       </div>
     </>
   );
