@@ -3,8 +3,6 @@ import { Col, Layout as LayoutAntd, Menu, Row, Space } from 'antd';
 import Footer from './Footer';
 import Header from './Header';
 
-const items = [{ label: 'Notaries', key: 'notaries' }];
-
 const Layout = ({ children }) => (
   <LayoutAntd style={{ minHeight: '100vh' }}>
     <LayoutAntd.Header style={{ backgroundColor: '#fff' }}>

@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 
-import type { MenuProps } from 'antd';
+import { Divider, MenuProps, Space } from 'antd';
 import { Menu } from 'antd';
 
 const items = [
@@ -11,32 +12,39 @@ const items = [
 const Header = () => {
   return (
     <>
+      {/* <div style={{ display: 'flex' }}> */}
+      {/* <div> */}
       <div style={{ display: 'flex' }}>
-        <div>
-          <Image
+        <div className='logo'>
+          <Space direction='horizontal' size={'large'} />
+          <img
             // className='logo'
-            width={34}
+            // width={34}
             height={34}
-            layout='raw'
+            // layout='raw'
             src='/filecoin-plus-logo.png'
             alt='Filecoin Plus Leaderboard'
             title='Filecoin Plus Leaderboard'
             // style={{ alignSelf: 'center' }}
           />
         </div>
-        <Menu
-          mode='horizontal'
-          // defaultSelectedKeys={['overview']}
-          items={items}
-        />
-        {/* <Menu
+        {/* </div> */}
+        <div style={{ flex: 'auto' }}>
+          <Menu
+            mode='horizontal'
+            // defaultSelectedKeys={['overview']}
+            items={items}
+          />
+        </div>
+      </div>
+      {/* <Menu
           mode='horizontal'
           // defaultSelectedKeys={['overview']}
         >
           <Menu.Item key="1">Test</Menu.Item>
           <Menu.Item key="2">Test2</Menu.Item>
         </Menu> */}
-      </div>
+      {/* </div> */}
     </>
   );
 };
