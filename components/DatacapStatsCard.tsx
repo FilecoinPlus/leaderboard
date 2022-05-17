@@ -1,13 +1,4 @@
-const Card = (children) => <>{children}</>;
-const Meta = (children) => <>{children}</>;
-const Avatar = (children) => <>{children}</>;
-const Link = (children) => <>{children}</>;
-const Divider = (children) => <>{children}</>;
-const Text = (children) => <>{children}</>;
-const GlobalOutlined = (children) => <>{children}</>;
-const Row = (children) => <>{children}</>;
-const Col = (children) => <>{children}</>;
-const Statistic = (children) => <>{children}</>;
+import { Card, Col, Divider, Row, Statistic } from 'antd';
 
 export const DatacapStatsCard = (props: any) => {
   return (

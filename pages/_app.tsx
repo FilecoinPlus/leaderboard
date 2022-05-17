@@ -1,7 +1,13 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import '../styles/sass/global.scss';
+// import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
+import 'antd/lib/style/themes/default.less';
+
+import '@ant-design/aliyun-theme/index.less';
+
+import '../styles/variables.less';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

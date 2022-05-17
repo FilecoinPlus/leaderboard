@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
-const Menu = (children) => <>{children}</>;
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
 
 const items = [
   { label: 'Overview', key: 'overview' },

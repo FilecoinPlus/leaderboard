@@ -4,6 +4,8 @@ import { VerifierCard } from './VerifierCard';
 
 export const VerifierList = ({ verifiers }) => {
   // console.log('verifiers ->', verifiers);
+  console.log('typeof verifiers ->', typeof verifiers);
+  console.log('verifiers.length ->', verifiers.length);
 
   return (
     <Row style={{ rowGap: '20px', columnGap: '20px' }}>

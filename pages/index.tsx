@@ -39,7 +39,7 @@ export const getStaticProps: GetStaticProps = async () => {
 const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>) => {
   const verifiers = formatData(pageProps.verifiers);
 
-  return <Homepage />;
+  return <Homepage verifiers={verifiers} />;
 };
 
 export default App;
