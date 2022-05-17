@@ -10,7 +10,10 @@ export const DatacapStatsCard = (props: any) => {
         justify='space-around'
       >
         <Col flex='auto'>
-          <Card size='small'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
             <Statistic
               title='Available'
               value={props.datacapAvailable}
@@ -21,7 +24,10 @@ export const DatacapStatsCard = (props: any) => {
         </Col>
 
         <Col flex='auto'>
-          <Card size='small'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
             <Statistic
               title='Allocated'
               value={props.datacapAllocated}

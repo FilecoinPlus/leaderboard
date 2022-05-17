@@ -1,20 +1,35 @@
-import { Col, Layout as LayoutAntd, Row, Space } from 'antd';
+import { Col, Layout as LayoutAntd, Menu, Row, Space } from 'antd';
 
 import Footer from './Footer';
 import Header from './Header';
+
+const items = [{ label: 'Notaries', key: 'notaries' }];
 
 const Layout = ({ children }) => (
   <LayoutAntd style={{ minHeight: '100vh' }}>
     <LayoutAntd.Header style={{ backgroundColor: '#fff' }}>
       <Header />
     </LayoutAntd.Header>
+    {/* <LayoutAntd>
+      <LayoutAntd.Sider
+        width={200}
+        // className='site-layout-background'
+      >
+        <Menu
+          mode='inline'
+          defaultSelectedKeys={['notaries']}
+          style={{ height: '100%', borderRight: 0 }}
+          items={items}
+        />
+      </LayoutAntd.Sider>
+    </LayoutAntd> */}
     <LayoutAntd>
       <Space>
         <div style={{ marginBottom: '30px', marginTop: '30px' }}></div>
       </Space>
       <LayoutAntd.Content>
         <Row justify='center'>
-          <Col span={18}>{children}</Col>
+          <Col span={22}>{children}</Col>
         </Row>
       </LayoutAntd.Content>
     </LayoutAntd>

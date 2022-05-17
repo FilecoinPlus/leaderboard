@@ -1,44 +1,66 @@
+import createFetch from '@vercel/fetch';
+
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 
 import { Divider, Typography } from 'antd';
 
+import buffer from 'buffer';
 import _ from 'lodash';
+import { URL } from 'url';
 
 import { getVerifiers } from '../lib/getVerifiers';
 import verifier from '../lib/verifier';
 
 import Layout from '../components/Layout/Layout';
-import { VerifierCard, VerifierTable } from '../components/Verifier';
+import { VerifierList } from '../components/Verifier';
 
 import { formatData } from '../utils/formats';
 
 const { Title } = Typography;
 
+const fetch = createFetch();
+
 export const getStaticProps: GetStaticProps = async () => {
   const verifiers = await getVerifiers();
 
+  const verifiersWithAvatars = await Promise.all(
+    verifiers
+      .filter((v) => !v.name.includes('LDN'))
+      .slice(0, 12)
+      .map(async (verifier) => {
+        const res = await fetch('https://joeschmoe.io/api/v1/random');
+        const resBlob = Buffer.from(await res.buffer());
+        const avatar = `data:${res.headers.get('content-type')};base64,${resBlob.toString('base64')}`;
+        return { ...verifier, avatar };
+      }),
+  );
+
   return {
     props: {
-      notaries: verifiers,
+      verifiers: verifiersWithAvatars,
     },
   };
 };
 
 const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>) => {
+  // console.log('pageProps ->', pageProps);
+
   return (
     <>
       <Layout>
-        <Title>All notaries</Title>
+        {/* <Title>Notaries</Title>
         <Divider
           style={{
-            background: 'linear-gradient(145deg,#c65aff,#248dff)',
+            // background: 'linear-gradient(145deg,#c65aff,#248dff)',
             height: '6px',
+            borderTopWidth: '2px',
             // minWidth: '24px',
             // width: '24px'
           }}
-        />
+        /> */}
 
-        <VerifierTable props={formatData(pageProps)} />
+        {/* <VerifierTable props={formatData(pageProps)} /> */}
+        <VerifierList verifiers={formatData(pageProps.verifiers)} />
       </Layout>
     </>
   );

@@ -16,46 +16,26 @@ const formatRegion = (regions: string[]) =>
   });
 
 export const formatData = (verifiers) =>
-  verifiers
-    // TODO(alexxnica): move filters to the `data` repository.
-    .filter((v: any) => !!v.name)
-    .filter((v: any) => v.name != 'n/a')
-    .filter((v: any) => !/Testing[^a-zA-Z]*Deleted/i.test(v.name))
-    .map((notary: any, index: any) => {
-      // const notaryName = notary.name.match(/(^[^\(]+)/i);
-      // const orgName = notary.name.match(/\(([^\(\)]+)\)/i);
-      // console.log('notary ->', notary);
-      return {
-        ...notary,
-        key: index,
-        name: notary.name,
-        organization: notary.organization || '–',
-        region: (_.isArray(notary.region) && formatRegion(notary.region)) || ['–'],
-        addressId: notary.addressId || '–',
-        addressKey: notary.addressKey || '–',
-        // url: /^https?/i.test(notary.auditTrail) && notary.auditTrail,
-        url:
-          _.isNumber(notary.issueNumber) &&
-          `https://github.com/filecoin-project/notary-governance/issues/${notary.issueNumber}`,
-        clients: notary.fromInterplanetaryOne.verifiedClientsCount,
-        datacapAvailable: prettyBytes(Number(notary.fromInterplanetaryOne.allowance), {
-          binary: true,
-        }),
-        datacapAvailableRaw: Number(notary.fromInterplanetaryOne.allowance),
-        // datacapAllocated: bytesToSize(Number((Number(notary.fromInterplanetaryOne.initialAllowance)-Number(notary.fromInterplanetaryOne.allowance))))
-        datacapAllocated: prettyBytes(
-          Number(notary.fromInterplanetaryOne.initialAllowance) - Number(notary.fromInterplanetaryOne.allowance),
-          { binary: true },
-        ),
-        datacapAllocatedRaw:
-          Number(notary.fromInterplanetaryOne.initialAllowance) - Number(notary.fromInterplanetaryOne.allowance),
-        datacapTotal: prettyBytes(
-          Number(notary.fromInterplanetaryOne.initialAllowance),
-          { binary: true },
-        ),
-        datacapTotalRaw:
-          Number(notary.fromInterplanetaryOne.initialAllowance),
-        averageTtd: notary.ttdAverages.averageTtd || '–',
-        averageTtdRaw: notary.ttdAverages.averageTtdRaw || 999999999,
-      };
-    });
+  verifiers.map((verifier: any, index: any) => {
+    return {
+      ...verifier,
+      key: index,
+      name: verifier.name,
+      organization: verifier.organization || '–',
+      region: (_.isArray(verifier.region) && formatRegion(verifier.region)) || ['–'],
+      addressId: verifier.addressId || '–',
+      addressKey: verifier.addressKey || '–',
+      issueUrl: verifier.issueUrl || '#',
+      clientsCount: verifier.clientsCount,
+      datacapAvailable: prettyBytes(Number(BigInt(verifier.hasDatacap.available).toString()), {
+        binary: true,
+      }),
+      datacapAvailableRaw: Number(BigInt(verifier.hasDatacap.available).toString()),
+      datacapAllocated: prettyBytes(Number(BigInt(verifier.hasDatacap.allocated).toString()), { binary: true }),
+      datacapAllocatedRaw: Number(BigInt(verifier.hasDatacap.allocated).toString()),
+      datacapTotal: prettyBytes(Number(BigInt(verifier.hasDatacap.total).toString()), { binary: true }),
+      datacapTotalRaw: Number(BigInt(verifier.hasDatacap.total).toString()),
+      averageTtd: verifier.hasStats.timeToDatacap.averageTtd || '–',
+      averageTtdRaw: verifier.hasStats.timeToDatacap.averageTtdRaw || 999999999,
+    };
+  });

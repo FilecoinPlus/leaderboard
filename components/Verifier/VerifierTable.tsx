@@ -2,7 +2,8 @@ import { Space, Table, Tag, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
 import { FieldTimeOutlined } from '@ant-design/icons';
-import _, { values } from 'lodash';
+
+import _ from 'lodash';
 
 const { Link } = Typography;
 

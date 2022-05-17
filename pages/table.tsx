@@ -8,7 +8,7 @@ import { getVerifiers } from '../lib/getVerifiers';
 import verifier from '../lib/verifier';
 
 import Layout from '../components/Layout/Layout';
-import { VerifierCard, VerifierTable } from '../components/Verifier';
+import { VerifierTable } from '../components/Verifier';
 
 import { formatData } from '../utils/formats';
 
@@ -19,26 +19,29 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      notaries: verifiers,
+      verifiers,
     },
   };
 };
 
 const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { verifiers } = pageProps.props;
+
   return (
     <>
       <Layout>
-        <Title>All notaries</Title>
+        <Title>Notaries</Title>
         <Divider
           style={{
-            background: 'linear-gradient(145deg,#c65aff,#248dff)',
+            // background: 'linear-gradient(145deg,#c65aff,#248dff)',
             height: '6px',
+            borderTopWidth: '2px',
             // minWidth: '24px',
             // width: '24px'
           }}
         />
 
-        <VerifierTable props={formatData(pageProps)} />
+        <VerifierTable props={formatData(verifiers)} />
       </Layout>
     </>
   );

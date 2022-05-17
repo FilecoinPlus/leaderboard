@@ -9,7 +9,10 @@ export const GeneralStatsCard = (props: any) => {
         justify='space-around'
       >
         <Col flex='auto'>
-          <Card size='small'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
             <Statistic
               title='Clients'
               value={props.clients}
@@ -18,7 +21,10 @@ export const GeneralStatsCard = (props: any) => {
           </Card>
         </Col>
         <Col flex='auto'>
-          <Card size='small'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
             <Statistic
               title='Average TTD'
               value='-'
