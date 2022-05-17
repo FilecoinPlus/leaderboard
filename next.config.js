@@ -7,15 +7,9 @@ const nextConfig = {
   //   formats: ['image/avif', 'image/webp'],
   // }
 };
-// const aliyunTheme = require('@ant-design/aliyun-theme');
-const withAntdLess = require('next-plugin-antd-less');
 
-module.exports = withAntdLess({
+module.exports = {
   ...nextConfig,
-  lessVarsFilePath: './styles/variables.less',
-  // lessVarsFilePathAppendToEndOfContent: true,
-  // cssLoaderOptions: {},
-  // modifyVars: aliyunTheme,
 
   webpack(config, options) {
     config.experiments = config.experiments || {};
@@ -23,4 +17,4 @@ module.exports = withAntdLess({
 
     return config;
   },
-});
+};

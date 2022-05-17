@@ -1,4 +1,8 @@
-import { Card, Col, Divider, Row, Statistic } from 'antd';
+const Divider = (children) => <>{children}</>;
+const Row = (children) => <>{children}</>;
+const Col = (children) => <>{children}</>;
+const Card = (children) => <>{children}</>;
+const Statistic = (children) => <>{children}</>;
 
 export const VerifierCardBody = ({ verifier }) => {
   return (

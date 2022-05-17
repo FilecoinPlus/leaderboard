@@ -2,21 +2,15 @@ import createFetch from '@vercel/fetch';
 
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 
-import { Divider, Typography } from 'antd';
-
-import buffer from 'buffer';
 import _ from 'lodash';
-import { URL } from 'url';
 
 import { getVerifiers } from '../lib/getVerifiers';
-import verifier from '../lib/verifier';
 
 import Layout from '../components/Layout/Layout';
 import { VerifierList } from '../components/Verifier';
 
+import { Homepage } from '../components';
 import { formatData } from '../utils/formats';
-
-const { Title } = Typography;
 
 const fetch = createFetch();
 
@@ -43,27 +37,9 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>) => {
-  // console.log('pageProps ->', pageProps);
+  const verifiers = formatData(pageProps.verifiers);
 
-  return (
-    <>
-      <Layout>
-        {/* <Title>Notaries</Title>
-        <Divider
-          style={{
-            // background: 'linear-gradient(145deg,#c65aff,#248dff)',
-            height: '6px',
-            borderTopWidth: '2px',
-            // minWidth: '24px',
-            // width: '24px'
-          }}
-        /> */}
-
-        {/* <VerifierTable props={formatData(pageProps)} /> */}
-        <VerifierList verifiers={formatData(pageProps.verifiers)} />
-      </Layout>
-    </>
-  );
+  return <Homepage />;
 };
 
 export default App;

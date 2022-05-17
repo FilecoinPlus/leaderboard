@@ -1,15 +1,16 @@
 import Image from 'next/image';
 
-import { Avatar, Card, Col, Divider, Statistic, Typography } from 'antd';
-
-import { GlobalOutlined, UserOutlined } from '@ant-design/icons';
-
 import { DatacapStatsCard } from '../DatacapStatsCard';
 import { GeneralStatsCard } from '../GeneralStatsCard';
 import { VerifierCardBody } from './VerifierCardBody';
 
-const { Meta } = Card;
-const { Text, Link } = Typography;
+const Card = (children) => <>{children}</>;
+const Meta = (children) => <>{children}</>;
+const Avatar = (children) => <>{children}</>;
+const Link = (children) => <>{children}</>;
+const Divider = (children) => <>{children}</>;
+const Text = (children) => <>{children}</>;
+const GlobalOutlined = (children) => <>{children}</>;
 
 export const VerifierCard = ({ verifier }) => {
   return (

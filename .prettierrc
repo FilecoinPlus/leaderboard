@@ -14,6 +14,7 @@
   "importOrder": [
     "^@vercel/?(.*)?$",
     "^next/?(.*)?$",
+    "^@carbon/?(.*)?$",
     "^antd/?(.*)?$",
     "^@ant-[a-zA-Z-_]{0,8}/?(.*)?$",
     "<THIRD_PARTY_MODULES>",
