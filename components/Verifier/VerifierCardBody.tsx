@@ -21,6 +21,25 @@ export const VerifierCardBody = ({ verifier }) => {
             className='card-stats'
           >
             <Statistic
+              title='Average TTD'
+              value={verifier.averageTtd}
+              valueRender={(value) => {
+                return (
+                  <Space size={'small'}>
+                    <FieldTimeOutlined />
+                    {value}
+                  </Space>
+                );
+              }}
+            />
+          </Card>
+        </Col>
+        <Col flex='auto'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
+            <Statistic
               title='Clients'
               value={verifier.clientsCount}
             />
@@ -34,25 +53,6 @@ export const VerifierCardBody = ({ verifier }) => {
             <Statistic
               title='Decisions'
               value={'–'}
-            />
-          </Card>
-        </Col>
-        <Col flex='auto'>
-          <Card
-            size='small'
-            className='card-stats'
-          >
-            <Statistic
-              title='Average TTD'
-              value={verifier.averageTtd}
-              valueRender={(value) => {
-                return (
-                  <Space size={'small'}>
-                    <FieldTimeOutlined />
-                    {value}
-                  </Space>
-                );
-              }}
             />
           </Card>
         </Col>

@@ -12,26 +12,28 @@ import { VerifierList } from '../components/Verifier';
 import { Homepage } from '../components';
 import { formatData } from '../utils/formats';
 
-const fetch = createFetch();
+// const fetch = createFetch();
 
 export const getStaticProps: GetStaticProps = async () => {
   const verifiers = await getVerifiers();
+  const verifiersWithTwoClientsOrMore = verifiers.filter((verifier) => verifier.clientsCount >= 2);
 
-  const verifiersWithAvatars = await Promise.all(
-    verifiers
-      .filter((v) => !v.name.includes('LDN'))
-      .slice(0, 12)
-      .map(async (verifier) => {
-        const res = await fetch('https://joeschmoe.io/api/v1/random');
-        const resBlob = Buffer.from(await res.buffer());
-        const avatar = `data:${res.headers.get('content-type')};base64,${resBlob.toString('base64')}`;
-        return { ...verifier, avatar };
-      }),
-  );
+  // const verifiersWithAvatars = await Promise.all(
+  //   verifiers
+  //     .filter((v) => !v.name.includes('LDN'))
+  //     .slice(0, 12)
+  //     .map(async (verifier) => {
+  //       const res = await fetch('https://joeschmoe.io/api/v1/random');
+  //       const resBlob = Buffer.from(await res.buffer());
+  //       const avatar = `data:${res.headers.get('content-type')};base64,${resBlob.toString('base64')}`;
+  //       return { ...verifier, avatar };
+  //     }),
+  // );
 
   return {
     props: {
-      verifiers: verifiersWithAvatars,
+      verifiers: verifiersWithTwoClientsOrMore,
+      // verifiers: verifiersWithAvatars,
     },
   };
 };

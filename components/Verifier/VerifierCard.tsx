@@ -29,14 +29,15 @@ export const VerifierCard = ({ verifier }) => {
         avatar={
           <Avatar
             icon={
-              <Image
-                layout='raw'
-                alt='Avatar'
-                src={verifier.avatar}
-                width={46}
-                height={46}
-                // style={{backgroundImage: `url(${verifier.avatar})`}}
-              />
+              <UserOutlined />
+              // <Image
+              //   layout='raw'
+              //   alt='Avatar'
+              //   src={verifier.avatar}
+              //   width={46}
+              //   height={46}
+              //   // style={{backgroundImage: `url(${verifier.avatar})`}}
+              // />
             }
             size={46}
           />
