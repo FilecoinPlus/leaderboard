@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-import { Avatar, Card, Col, Divider, Statistic, Typography } from 'antd';
+import { Avatar, Badge, Card, Col, Divider, Space, Statistic, Tag, Typography } from 'antd';
 
-import { GlobalOutlined, UserOutlined } from '@ant-design/icons';
+import { CompassOutlined, GlobalOutlined, IdcardOutlined, UserOutlined } from '@ant-design/icons';
 
 import { DatacapStatsCard } from '../DatacapStatsCard';
 import { GeneralStatsCard } from '../GeneralStatsCard';
@@ -13,11 +13,18 @@ const { Text, Link } = Typography;
 
 export const VerifierCard = ({ verifier }) => {
   return (
+    // <Badge.Ribbon text='New'>
     <Card
       bordered={false}
       style={{ minWidth: '360px', maxWidth: '400px', width: '360px' }}
       className={'verifier-card'}
     >
+      <Tag style={{ float: 'right', border: 'inherit', fontSize: '13px', color: '#8e8e8e' }}>
+        <Space size={'small'}>
+          <IdcardOutlined style={{ fontSize: '16px', verticalAlign: 'text-top' }} />
+          Notary
+        </Space>
+      </Tag>
       <Meta
         avatar={
           <Avatar
@@ -61,10 +68,11 @@ export const VerifierCard = ({ verifier }) => {
           key='location'
           style={{ color: '#8e8e8e' }}
         >
-          <GlobalOutlined style={{ marginRight: '8px' }} />
+          <CompassOutlined style={{ marginRight: '8px' }} />
           {verifier.region}
         </Text>
       </div>
     </Card>
+    // </Badge.Ribbon>
   );
 };

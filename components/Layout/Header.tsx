@@ -16,7 +16,10 @@ const Header = () => {
       {/* <div> */}
       <div style={{ display: 'flex' }}>
         <div className='logo'>
-          <Space direction='horizontal' size={'large'} />
+          <Space
+            direction='horizontal'
+            size={'large'}
+          />
           <img
             // className='logo'
             // width={34}
@@ -32,7 +35,7 @@ const Header = () => {
         <div style={{ flex: 'auto' }}>
           <Menu
             mode='horizontal'
-            // defaultSelectedKeys={['overview']}
+            defaultSelectedKeys={['leaderboard']}
             items={items}
           />
         </div>

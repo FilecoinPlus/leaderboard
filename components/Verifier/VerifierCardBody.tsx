@@ -1,9 +1,16 @@
-import { Card, Col, Divider, Row, Statistic } from 'antd';
+import { Card, Col, Divider, Row, Space, Statistic, Tag } from 'antd';
+
+import { DatabaseOutlined, FieldTimeOutlined } from '@ant-design/icons';
 
 export const VerifierCardBody = ({ verifier }) => {
   return (
     <>
-      <Divider plain>General</Divider>
+      <Divider
+        orientation='left'
+        plain
+      >
+        General
+      </Divider>
       <Row
         gutter={8}
         justify='space-around'
@@ -38,11 +45,24 @@ export const VerifierCardBody = ({ verifier }) => {
             <Statistic
               title='Average TTD'
               value={verifier.averageTtd}
+              valueRender={(value) => {
+                return (
+                  <Space size={'small'}>
+                    <FieldTimeOutlined />
+                    {value}
+                  </Space>
+                );
+              }}
             />
           </Card>
         </Col>
       </Row>
-      <Divider plain>DataCap</Divider>
+      <Divider
+        orientation='left'
+        plain
+      >
+        DataCap
+      </Divider>
       <Row
         gutter={8}
         justify='space-around'
@@ -80,6 +100,17 @@ export const VerifierCardBody = ({ verifier }) => {
             />
           </Card>
         </Col>
+        {/* <Col flex='auto'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
+            <Statistic
+              title='Used in deals'
+              value={'–'}
+            />
+          </Card>
+        </Col> */}
       </Row>
     </>
   );
