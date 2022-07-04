@@ -13,10 +13,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Filecoin Plus - Leaderboard</title>
+        <title>Leaderboard | Filecoin Plus</title>
         <meta
           name='description'
-          content='Filecoin Plus - Leaderboard App'
+          content='The leaderboard for Filecoin Plus Notaries!'
         />
       </Head>
       <Component {...pageProps} />

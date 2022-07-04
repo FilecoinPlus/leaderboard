@@ -73,7 +73,8 @@ export const VerifierListNew = ({ verifiers }) => {
       render: (value, record, index) => {
         return (
           <Link
-            href={record.url}
+            href={record.issueUrl}
+            target='_blank'
             // style={{ color: 'inherit' }}
             // style={{ fontWeight: 500 }}
           >

@@ -18,7 +18,8 @@ const formatRegion = (regions: string[]) =>
 export const formatData = (verifiers) =>
   verifiers.map((verifier: any, index: any) => {
     return {
-      ...verifier,
+      // Temporarily remove additional verifier information to improve performance
+      // ...verifier,
       key: index,
       name: verifier.name,
       organization: verifier.organization || '–',

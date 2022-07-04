@@ -1,14 +1,15 @@
 import { Octokit } from 'octokit';
-import * as util from 'util';
 
-util.inspect.defaultOptions = {
-  colors: true,
-  depth: Infinity,
-  maxArrayLength: null,
-  // showHidden: true,
-  // breakLength: Infinity,
-  breakLength: 2,
-};
+// import * as util from 'util';
+
+// util.inspect.defaultOptions = {
+//   colors: true,
+//   depth: Infinity,
+//   maxArrayLength: null,
+//   // showHidden: true,
+//   // breakLength: Infinity,
+//   breakLength: 2,
+// };
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN_FILPLUS });
 
