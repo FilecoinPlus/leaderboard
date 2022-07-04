@@ -1,37 +1,25 @@
-// import 'antd/dist/antd.css';
-import '../styles/variables.less';
-import {
-  ApolloProvider,
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-} from '@apollo/client';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
-function createApolloClient() {
-  const link = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
-  });
+// import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
+import 'antd/lib/style/themes/default.less';
 
-  return new ApolloClient({
-    link,
-    cache: new InMemoryCache(),
-    connectToDevTools: true,
-    // ssrMode: true,
-  });
-}
+import '@ant-design/aliyun-theme/index.less';
+
+import '../styles/variables.less';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Filecoin Plus - Leaderboard</title>
-        <meta name='description' content='Filecoin Plus - Leaderboard App' />
+        <title>Leaderboard | Filecoin Plus</title>
+        <meta
+          name='description'
+          content='The leaderboard for Filecoin Plus Notaries!'
+        />
       </Head>
-      <ApolloProvider client={createApolloClient()}>
-        <Component {...pageProps} />
-      </ApolloProvider>
+      <Component {...pageProps} />
     </>
   );
 }

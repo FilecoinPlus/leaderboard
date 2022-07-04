@@ -1,24 +1,58 @@
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const withLess = require('next-with-less');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  // images: {
-  //   formats: ['image/avif', 'image/webp'],
-  // }
+  experimental: { images: { layoutRaw: true } },
+  images: {
+    // formats: ['image/avif', 'image/webp'],
+    domains: ['portal.filplus.dev'],
+  },
 };
-// const aliyunTheme = require('@ant-design/aliyun-theme');
-const withAntdLess = require('next-plugin-antd-less');
 
-module.exports = withAntdLess({
+module.exports = withLess({
   ...nextConfig,
-  lessVarsFilePath: './styles/variables.less',
-  // lessVarsFilePathAppendToEndOfContent: true,
-  // cssLoaderOptions: {},
-  // modifyVars: aliyunTheme,
+
+  lessLoaderOptions: {
+    lessOptions: {
+      modifyVars: {},
+    },
+  },
 
   webpack(config, options) {
     config.experiments = config.experiments || {};
     config.experiments.topLevelAwait = true;
+
+    // config.module.rules.push(
+    //   {
+    //     test: /\.(css)$/,
+    //     use: [MiniCssExtractPlugin.loader, 'css-loader'],
+    //   },
+    //   {
+    //     test: /\.(less)$/,
+    //     use: [
+    //       MiniCssExtractPlugin.loader,
+    //       'css-loader',
+    //       {
+    //         loader: 'less-loader',
+    //         options: {
+    //           lessOptions: {
+    //             javascriptEnabled: true,
+    //             math: 'always',
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // );
+
+    // config.plugins.push(
+    //   new MiniCssExtractPlugin({
+    //     filename: 'static/[name].css',
+    //   }),
+    // );
 
     return config;
   },
