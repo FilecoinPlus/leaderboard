@@ -9,7 +9,7 @@ export const Homepage = ({ verifiers }) => {
   return (
     <>
       <Layout>
-        <Segmented
+        {/* <Segmented
           options={[
             {
               value: 'Grid',
@@ -20,8 +20,8 @@ export const Homepage = ({ verifiers }) => {
               icon: <BarsOutlined />,
             },
           ]}
-        />
-        <div style={{ marginBottom: '10px' }}></div>
+        /> */}
+        {/* <div style={{ marginBottom: '10px' }}></div> */}
         <VerifierList verifiers={verifiers} />
       </Layout>
     </>

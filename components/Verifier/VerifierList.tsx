@@ -1,11 +1,15 @@
 import { Col, Row } from 'antd';
 
+import { useState } from 'react';
+
 import { VerifierCard } from './VerifierCard';
 
 export const VerifierList = ({ verifiers }) => {
   // console.log('verifiers ->', verifiers);
   console.log('typeof verifiers ->', typeof verifiers);
   console.log('verifiers.length ->', verifiers.length);
+
+  const [data, setData] = useState(verifiers);
 
   return (
     <Row style={{ rowGap: '20px', columnGap: '20px' }}>

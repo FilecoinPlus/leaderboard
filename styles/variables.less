@@ -10,14 +10,20 @@
 // @layout-body-background: #ffffff;
 // @layout-body-background: #f3f4f7;
 @layout-body-background: #fafafa;
+// @layout-body-background: rgba(247, 248, 252, 1);
 @layout-header-background: #ffffff;
 @layout-footer-background: @layout-body-background;
 @layout-header-height: 72px;
 
 @font-size-sm: 14px;
 @font-size-base: 14px;
+// @font-family: 'Nunito', sans-serif;
 
-// General
+// html,
+// body {
+//   font-family: @font-family;
+// }
+
 .ant-card-meta-title {
   margin-bottom: 0 !important;
 }
@@ -72,6 +78,9 @@
 
 .ant-card-meta-description {
   color: #8e8e8e;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: auto;
 }
 
 .card-stats > .ant-card-body {
@@ -94,8 +103,9 @@
 }
 
 .ant-card.verifier-card {
-  border-color: #e2e2e2;
-  border-style: double;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-style: solid;
+  border-width: 1px;
 }
 
 .ant-divider-inner-text {
@@ -109,3 +119,103 @@
 // .ant-card-extra {
 //   display: contents;
 // }
+
+.grid-view .ant-tag {
+  padding: 5px 8px;
+}
+
+.ant-menu-horizontal {
+  border: 0;
+  border-bottom-width: 0px;
+  border-bottom-style: initial;
+  border-bottom-color: initial;
+}
+
+.ant-layout-header {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #e2e2e2;
+}
+
+.ant-layout {
+  // background: rgba(247, 248, 252, 1);
+}
+
+.ant-layout-footer {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #e2e2e2;
+  background-color: #ffffff;
+  color: #6e6e6e;
+}
+
+.grid-view a.ant-typography {
+  // color: #2b63d3;
+  color: rgb(75, 75, 75);
+  // font-weight: 600;
+}
+
+.list-view a.ant-typography {
+  // color: #2b63d3;
+  color: rgba(0, 100, 200, 1);
+  // font-weight: 600;
+}
+
+// Related to the new grid view
+.grid-view .ant-table {
+  background: unset;
+}
+
+.grid-view .ant-table-container {
+  // display: flex;
+  // flex-direction: column;
+  // width: 100%;
+}
+
+.grid-view .ant-table-tbody {
+  // display: flex;
+}
+
+.grid-view .test {
+  display: grid;
+  // flex-flow: row wrap;
+}
+
+// .ant-table-wrapper::before {
+//   display: unset;
+//   content: unset;
+// }
+
+// .ant-table-wrapper::after {
+//   display: unset;
+//   clear: unset;
+//   content: unset;
+// }
+
+.grid-view .TableRender {
+  table-layout: unset !important;
+}
+
+.grid-view .TableRender .ant-table-tbody {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+}
+
+// List view
+
+.list-view .ant-table tfoot > tr > td,
+.list-view .ant-table tfoot > tr > th,
+.list-view .ant-table-tbody > tr > td,
+.list-view .ant-table-thead > tr > th {
+  padding: 12px 16px;
+}
+
+.list-view .ant-table {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.list-view {
+  color: rgba(0, 0, 0, 0.65);
+}

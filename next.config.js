@@ -6,9 +6,10 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   experimental: { images: { layoutRaw: true } },
-  // images: {
-  //   formats: ['image/avif', 'image/webp'],
-  // }
+  images: {
+    // formats: ['image/avif', 'image/webp'],
+    domains: ['portal.filplus.dev'],
+  },
 };
 
 module.exports = withLess({

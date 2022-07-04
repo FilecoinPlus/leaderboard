@@ -11,6 +11,7 @@ import { VerifierList } from '../components/Verifier';
 
 import { Homepage } from '../components';
 import { formatData } from '../utils/formats';
+// import TestPage from '../components/TestPage';
 
 // const fetch = createFetch();
 
@@ -32,7 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      verifiers: verifiersWithTwoClientsOrMore,
+      verifiers: verifiers,
       // verifiers: verifiersWithAvatars,
     },
   };
@@ -42,6 +43,7 @@ const App: NextPage = (pageProps: InferGetStaticPropsType<typeof getStaticProps>
   const verifiers = formatData(pageProps.verifiers);
 
   return <Homepage verifiers={verifiers} />;
+  // return <TestPage />;
 };
 
 export default App;

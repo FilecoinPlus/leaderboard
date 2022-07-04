@@ -23,6 +23,7 @@ export const formatData = (verifiers) =>
       name: verifier.name,
       organization: verifier.organization || '–',
       region: (_.isArray(verifier.region) && formatRegion(verifier.region)) || ['–'],
+      regionRaw: (_.isArray(verifier.region) && verifier.region) || ['–'],
       addressId: verifier.addressId || '–',
       addressKey: verifier.addressKey || '–',
       issueUrl: verifier.issueUrl || '#',
@@ -37,5 +38,7 @@ export const formatData = (verifiers) =>
       datacapTotalRaw: Number(BigInt(verifier.hasDatacap.total).toString()),
       averageTtd: verifier.hasStats.timeToDatacap.averageTtd || '–',
       averageTtdRaw: verifier.hasStats.timeToDatacap.averageTtdRaw || 999999999,
+      averageLdnTtd: verifier.hasStats.ldnTimeToDatacap.averageTtd || '–',
+      averageLdnTtdRaw: verifier.hasStats.ldnTimeToDatacap.averageTtdRaw || 999999999,
     };
   });

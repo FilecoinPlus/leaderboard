@@ -37,6 +37,9 @@ const Layout = ({ children }) => (
     >
       <div></div>
     </Space>
+    <Space>
+      <div style={{ marginBottom: '30px', marginTop: '30px' }}></div>
+    </Space>
     <LayoutAntd.Footer style={{ textAlign: 'center' }}>
       <Footer />
     </LayoutAntd.Footer>

@@ -16,7 +16,11 @@ export const VerifierCard = ({ verifier }) => {
     // <Badge.Ribbon text='New'>
     <Card
       bordered={false}
-      style={{ minWidth: '360px', maxWidth: '400px', width: '360px' }}
+      style={{
+        // minWidth: '360px',
+        // maxWidth: '400px',
+        width: '360px',
+      }}
       className={'verifier-card'}
     >
       <Tag style={{ float: 'right', border: 'inherit', fontSize: '13px', color: '#8e8e8e' }}>
@@ -40,6 +44,7 @@ export const VerifierCard = ({ verifier }) => {
               // />
             }
             size={46}
+            shape='square'
           />
         }
         title={

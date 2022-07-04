@@ -14,6 +14,7 @@ export const VerifierCardBody = ({ verifier }) => {
       <Row
         gutter={8}
         justify='space-around'
+        style={{ rowGap: '8px' }}
       >
         <Col flex='auto'>
           <Card
@@ -21,7 +22,26 @@ export const VerifierCardBody = ({ verifier }) => {
             className='card-stats'
           >
             <Statistic
-              title='Average TTD'
+              title='Avg. TTD'
+              value={verifier.averageTtd}
+              valueRender={(value) => {
+                return (
+                  <Space size={'small'}>
+                    <FieldTimeOutlined />
+                    {value}
+                  </Space>
+                );
+              }}
+            />
+          </Card>
+        </Col>
+        <Col flex='auto'>
+          <Card
+            size='small'
+            className='card-stats'
+          >
+            <Statistic
+              title='Avg. LDN TTD'
               value={verifier.averageTtd}
               valueRender={(value) => {
                 return (
@@ -45,7 +65,7 @@ export const VerifierCardBody = ({ verifier }) => {
             />
           </Card>
         </Col>
-        <Col flex='auto'>
+        {/* <Col flex='auto'>
           <Card
             size='small'
             className='card-stats'
@@ -55,7 +75,7 @@ export const VerifierCardBody = ({ verifier }) => {
               value={'–'}
             />
           </Card>
-        </Col>
+        </Col> */}
       </Row>
       <Divider
         orientation='left'
