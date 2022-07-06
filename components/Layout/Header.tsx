@@ -55,9 +55,9 @@ const Header = () => {
                 <a>Home</a>
               </Link>
             </Menu.Item>
-            <Menu.Item key='/methodology'>
-              <Link href='/methodology'>
-                <a>Methodology</a>
+            <Menu.Item key='/about'>
+              <Link href='/about'>
+                <a>About</a>
               </Link>
             </Menu.Item>
             <Menu.Item key='/statuspage'>

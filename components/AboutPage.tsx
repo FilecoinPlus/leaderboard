@@ -34,11 +34,11 @@ const formulaItems = [
   },
 ];
 
-export const MethodologyPage = () => {
+export const AboutPage = () => {
   return (
     <>
       <Layout>
-        <Title level={1}>Leaderboard Methodology</Title>
+        <Title level={1}>About the Fil+ Leaderboard</Title>
         {/* <Content style={{ textAlign: 'center' }}>TBD.</Content> */}
         {/* <Paragraph>Paragraph...</Paragraph> */}
 
