@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Descriptions, Typography } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import Paragraph from 'antd/lib/typography/Paragraph';
@@ -50,6 +52,30 @@ export const AboutPage = () => {
             }
           }
         >
+          <Descriptions
+            title='Resources'
+            bordered
+            size='middle'
+            column={1}
+          >
+            <Descriptions.Item
+              labelStyle={{ backgroundColor: 'rgba(228, 228, 228, 0.8)' }}
+              contentStyle={{ backgroundColor: 'rgba(228, 228, 228, 0.4)' }}
+              label="Leaderboard's code repository"
+            >
+              <Link href='https://github.com/filecoin-project/filecoin-plus-leaderboard'>
+                https://github.com/filecoin-project/filecoin-plus-leaderboard
+              </Link>
+            </Descriptions.Item>
+            <Descriptions.Item
+              labelStyle={{ backgroundColor: 'rgba(228, 228, 228, 0.8)' }}
+              contentStyle={{ backgroundColor: 'rgba(228, 228, 228, 0.4)' }}
+              label='Data repository'
+            >
+              <Link href='https://github.com/FilecoinPlus/data'>https://github.com/FilecoinPlus/data</Link>
+            </Descriptions.Item>
+          </Descriptions>
+          <br />
           <Descriptions
             title='Glossary'
             bordered
